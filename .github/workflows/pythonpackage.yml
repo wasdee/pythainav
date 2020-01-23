@@ -1,0 +1,29 @@
+name: Python package
+
+on: [push]
+
+jobs:
+  pytest:
+    name: pytest
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.6, 3.7, 3.8]
+    steps:
+    - uses: actions/checkout@master
+    - name: Install
+      uses: abatilo/actions-poetry@v1.1.0
+      with:
+        python_version: ${{ matrix.python-version }}
+        poetry_version: 0.12.17
+        working_directory: .
+        args: install
+    - name: Run pytest
+      uses: abatilo/actions-poetry@v1.1.0
+      with:
+        python_version: 3.8.0
+        poetry_version: 0.12.17
+        working_directory: ./working_dir
+        args: run python -m pytest tests/
+
