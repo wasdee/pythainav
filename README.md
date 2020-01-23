@@ -17,10 +17,10 @@ $ pip install pythainav
 import pythainav as nav
 
 nav.get("KT-PRECIOUS") 
-# > Nav(value=4.2696, updated='00/00/0000', tags={'latest'}, fund='KT-PRECIOUS')
+> Nav(value=4.2696, updated='20/01/2020', tags={'latest'}, fund='KT-PRECIOUS')
 
 nav.get("TISTECH-A") 
-# > Nav(value=12.9976, updated='00/00/0000', tags={'latest'}, fund='TISTECH-A')
+> Nav(value=12.9976, updated='21/01/2020', tags={'latest'}, fund='TISTECH-A')
 
 ```
 
