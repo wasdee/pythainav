@@ -5,7 +5,7 @@ from typing import List
 @dataclass
 class Nav(object):
     '''Class for store the NAV value with references'''
-    price: float
+    value: float
     updated: datetime
     tags: List[str]
     fund: str
