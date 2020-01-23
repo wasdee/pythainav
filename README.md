@@ -1,6 +1,11 @@
-# pythainav
+# PythaiNAV
+
+![cover image](https://github.com/CircleOnCircles/pythainav/raw/master/extra/pythainav.png)
+
 
 ทำให้การดึงข้อมูลกองทุนไทยเป็นเรื่องง่าย
+
+> อยากชวนทุกคนมาร่วมพัฒนา ติชม แนะนำ เพื่อให้ทุกคนเข้าถึงข้อมูลการง่ายขึ้น [เริ่มต้นได้ที่นี้](https://github.com/CircleOnCircles/pythainav/issues)
 
 ## Get Started - เริ่มต้นใช้งาน
 ```bash
