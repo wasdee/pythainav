@@ -8,14 +8,19 @@
 > อยากชวนทุกคนมาร่วมพัฒนา ติชม แนะนำ เพื่อให้ทุกคนเข้าถึงข้อมูลการง่ายขึ้น [เริ่มต้นได้ที่นี้](https://github.com/CircleOnCircles/pythainav/issues) หรือเข้ามา Chat ใน [Discord](https://discord.gg/jjuMcKZ) ได้เลย 😊
 
 ## Get Started - เริ่มต้นใช้งาน
+
 ```bash
 $ pip install pythainav
 ```
-```python
-import pythainav
 
-pythainav.get_nav("KT-PRECIOUS") # 4.2938
-pythainav.get_nav("TISTECH-A") # 12.9976
+```python
+import pythainav as nav
+
+nav.get("KT-PRECIOUS") 
+> Nav(value=4.2696, updated='20/01/2020', tags={'latest'}, fund='KT-PRECIOUS')
+
+nav.get("TISTECH-A") 
+> Nav(value=12.9976, updated='21/01/2020', tags={'latest'}, fund='TISTECH-A')
 
 ```
 
