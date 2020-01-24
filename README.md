@@ -1,7 +1,13 @@
 # PythaiNAV
 ![Language](https://img.shields.io/github/languages/top/CircleOnCircles/pythainav)
-![Github_workflow_tatus](https://img.shields.io/github/workflow/status/CircleOnCircles/pythainav/Python%20package)
+![Start](https://img.shields.io/github/stars/CircleOnCircles/pythainav)
+![Fork](https://img.shields.io/github/forks/CircleOnCircles/pythainav?label=Fork)
+![Watch](https://img.shields.io/github/watchers/CircleOnCircles/pythainav?label=Watch)
+![Issues](https://img.shields.io/github/issues/CircleOnCircles/pythainav)
+![Pull Requests](https://img.shields.io/github/issues-pr/CircleOnCircles/pythainav.svg)
+![Contributors](https://img.shields.io/github/contributors/CircleOnCircles/pythainav.svg)
 
+![Github_workflow_tatus](https://img.shields.io/github/workflow/status/CircleOnCircles/pythainav/Python%20package)
 ![lgtm_gred](https://img.shields.io/lgtm/grade/python/github/CircleOnCircles/pythainav)
 ![lgtm_alerts](https://img.shields.io/lgtm/alerts/github/CircleOnCircles/pythainav)
 
