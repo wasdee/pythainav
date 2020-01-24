@@ -1,4 +1,10 @@
 # PythaiNAV
+![Language](https://img.shields.io/github/languages/top/CircleOnCircles/pythainav)
+![Github_workflow_tatus](https://img.shields.io/github/workflow/status/CircleOnCircles/pythainav/Python%20package)
+
+![lgtm_gred](https://img.shields.io/lgtm/grade/python/github/CircleOnCircles/pythainav)
+![lgtm_alerts](https://img.shields.io/lgtm/alerts/github/CircleOnCircles/pythainav)
+
 
 ![cover image](https://github.com/CircleOnCircles/pythainav/raw/master/extra/pythainav.png)
 
