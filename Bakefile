@@ -1,0 +1,5 @@
+linting:
+    pre-commit run --all-files
+
+deploy:
+    poetry publish --build
