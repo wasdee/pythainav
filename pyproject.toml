@@ -3,10 +3,13 @@ name = "pythainav"
 version = "0.1.1"
 description = "a Python interface to pull thai mutual fund NAV"
 authors = ["Nutchanon Ninyawee <me@nutchanon.org>"]
+maintainers = ["Nutchanon Ninyawee <me@nutchanon.org>"]
+readme = 'README.md'
+repository = "https://github.com/CircleOnCircles/pythainav"
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.6"
 requests-html = "^0.10.0"
 furl = "^2.1"
 dateparser = "^0.7.2"
