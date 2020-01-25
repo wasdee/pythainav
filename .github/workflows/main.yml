@@ -45,7 +45,7 @@ jobs:
       with:
         path: .venv
         key: venv-${{ runner.os }}-${{ steps.full-python-version.outputs.version }}-${{ hashFiles('**/poetry.lock') }}
-    - name: Install dependencies
+    - name: Install all dependencies
       run: |
         source $HOME/.poetry/env
         poetry install
