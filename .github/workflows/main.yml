@@ -3,8 +3,22 @@ name: Tests
 on: [push, pull_request]
 
 jobs:
-  pytest:
-    name: pytest
+  Linting:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - name: Linting
+        run: |
+          pip install pre-commit
+          pre-commit run --all-files
+
+  Linux:
+    needs: Linting
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -27,7 +41,7 @@ jobs:
         source $HOME/.poetry/env
         poetry config virtualenvs.in-project true
     - name: Set up cache
-      uses: actions/cache@master
+      uses: actions/cache@v1
       with:
         path: .venv
         key: venv-${{ runner.os }}-${{ steps.full-python-version.outputs.version }}-${{ hashFiles('**/poetry.lock') }}
