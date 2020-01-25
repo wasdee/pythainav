@@ -9,13 +9,21 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.6.9, 3.7.5, 3.8.0]
+        python-version: [3.6, 3.7, 3.8]
     steps:
     - uses: actions/checkout@master
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@vmaster
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Get full python version
+      id: full-python-version
+      run: |
+        echo ::set-output name=version::$(python -c "import sys; print('-'.join(str(v) for v in sys.version_info[:3]))")
     - name: Install poetry
       run:  |
         curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py -o get-poetry.py
-        python get-poetry.py -y
+        python get-poetry.py --preview -y
         source $HOME/.poetry/env
         poetry config virtualenvs.in-project true
         - name: Set up cache
