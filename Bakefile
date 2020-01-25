@@ -3,3 +3,12 @@ linting:
 
 publish:
     poetry publish --build
+
+serve/docs:
+    mkdocs serve
+
+build/docs:
+    mkdocs build
+
+tests:
+    pytest tests/
