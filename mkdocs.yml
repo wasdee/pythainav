@@ -1,4 +1,21 @@
+
 theme:
   name: 'material'
 
-site_name: My Docs
+# HOW-TO customize <https://squidfunk.github.io/mkdocs-material/getting-started/>
+
+repo_name: 'CircleOnCircles/pythainav'
+repo_url: 'https://github.com/CircleOnCircles/pythainav'
+
+markdown_extensions:
+  - codehilite:
+      linenums: true
+  - toc:
+      permalink: true
+  - mkautodoc
+
+site_name: PythaiNAV documentation
+nav:
+    - Get Started: index.md
+    - API Reference: api.md
+    - Data Source: datasource.md

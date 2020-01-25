@@ -19,6 +19,9 @@ dataclasses = {version = "^0.7.0", python = "3.6"}
 pytest = "^5.3"
 mkdocs = "^1.0"
 mkdocs-material = "^4.6"
+pygments = "^2.5"
+pymdown-extensions = "^6.2"
+mkautodoc = "^0.1.0"
 
 [tool.black]
 line-length = 127

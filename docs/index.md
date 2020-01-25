@@ -1,17 +1,21 @@
-# Welcome to MkDocs
+# PythaiNAV
+*ทำให้การดึงข้อมูล* ***กองทุนไทย*** *เป็นเรื่องง่าย*
 
-For full documentation visit [mkdocs.org](https://mkdocs.org).
 
-## Commands
+## Get Started - เริ่มต้นใช้งาน
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs help` - Print this help message.
+ติดตั้ง PythaiNAV ก่อน
+```bash
+pip install pythainav
+```
 
-## Project layout
+```python
+>>> import pythainav as nav
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+>>> nav.get("KT-PRECIOUS")
+Nav(value=4.2696, updated='20/01/2020', tags={'latest'}, fund='KT-PRECIOUS')
+
+>>> nav.get("TISTECH-A")
+Nav(value=12.9976, updated='21/01/2020', tags={'latest'}, fund='TISTECH-A')
+
+```
