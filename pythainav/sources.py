@@ -2,7 +2,6 @@ from abc import ABC
 from abc import abstractmethod
 
 
-
 class Source(ABC):
     @abstractmethod
     def get(self, fund: str):
