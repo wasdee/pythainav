@@ -1,5 +1,10 @@
 # Release Note
 
+## 0.1.3 - 25 Jan 2020
+
+### Fixes
+* dataclasses error on python 3.6
+
 ## 0.1.2 - 25 Jan 2020
 
 ### Features
