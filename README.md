@@ -16,10 +16,10 @@ $ pip install pythainav
 ```python
 import pythainav as nav
 
-nav.get("KT-PRECIOUS") 
+nav.get("KT-PRECIOUS")
 > Nav(value=4.2696, updated='20/01/2020', tags={'latest'}, fund='KT-PRECIOUS')
 
-nav.get("TISTECH-A") 
+nav.get("TISTECH-A")
 > Nav(value=12.9976, updated='21/01/2020', tags={'latest'}, fund='TISTECH-A')
 
 ```
@@ -28,6 +28,6 @@ nav.get("TISTECH-A")
 
 ตอนนี้ใช้ข้อมูลจาก website <https://www.finnomena.com/fund>
 
-## Disclaimer 
+## Disclaimer
 
 เราไม่ได้เกี่ยวข้องกับ "finnomena.com" แต่อย่างใด เราไม่รับประกันความเสียหายใดๆทั้งสิ้นที่เกิดจาก แหล่งข้อมูล, library, source code,sample code, documentation, library dependencies และอื่นๆ
