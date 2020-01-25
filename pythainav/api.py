@@ -1,5 +1,5 @@
-from .nav import Nav
 from . import sources
+from .nav import Nav
 
 
 def get(fund_name, source="finnomena", **kargs):
