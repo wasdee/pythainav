@@ -18,7 +18,7 @@ jobs:
         source $HOME/.poetry/env
         poetry config virtualenvs.in-project true
         - name: Set up cache
-      uses: actions/cache@v1
+    - uses: actions/cache@v1
       with:
         path: .venv
         key: venv-${{ runner.os }}-${{ steps.full-python-version.outputs.version }}-${{ hashFiles('**/poetry.lock') }}
