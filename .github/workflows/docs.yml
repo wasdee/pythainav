@@ -32,7 +32,7 @@ jobs:
         poetry run mkdocs build
     - name: Add Custom Domain Settings
       run: |
-        echo "pythainav.nutchanon.org" >> CNAME
+        echo "pythainav.nutchanon.org" >> ./site/CNAME
     - name: Deploy Docs
       uses: peaceiris/actions-gh-pages@v2
       env:
