@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@master
       with:
         python-version: ${{ matrix.python-version }}
     - name: Get full python version
@@ -27,7 +27,7 @@ jobs:
         source $HOME/.poetry/env
         poetry config virtualenvs.in-project true
     - name: Set up cache
-      uses: actions/cache@v1
+      uses: actions/cache@master
       with:
         path: .venv
         key: venv-${{ runner.os }}-${{ steps.full-python-version.outputs.version }}-${{ hashFiles('**/poetry.lock') }}
