@@ -1,5 +1,13 @@
 from abc import ABC
 from abc import abstractmethod
+from functools import lru_cache
+
+import dateparser
+import requests
+
+from furl import furl
+
+from .nav import Nav
 
 
 class Source(ABC):
@@ -13,24 +21,34 @@ class Source(ABC):
 
 
 class Finnomena(Source):
+    base = furl("https://www.finnomena.com/fn3/api/fund/")
+
     def __init__(self):
         super().__init__()
 
     def get(self, fund: str):
-        from requests_html import HTMLSession
+        name2fund = self.list()
 
-        baseurl = "https://www.finnomena.com/fund/"
-        # TODO: parse ilegal fund name "BP33/19" -> "BP33%2F19"
-        url = baseurl + fund
-        session = HTMLSession()
-        r = session.get(url)
-        r.html.render()
-        price = r.html.find("h3", first=True)
-        return float(price.text)
+        url = self.base / "nav" / "latest"
+        url.args["fund"] = name2fund[fund]["id"]
 
+        # convert to str
+        url = url.url
+
+        nav = requests.get(url).json()
+        nav = Nav(value=float(nav["value"]), updated=dateparser.parse(nav["nav_date"]), tags={"latest"}, fund=fund)
+        return nav
+
+    # cache here should be sensible since the fund is not regulary update
+    # TODO: change or ttl cache with timeout = [1 hour, 1 day]
+    @lru_cache(maxsize=1)
     def list(self):
-        # TODO
-        pass
+        url = self.base / "public" / "list"
+        url = url.url
+        funds = requests.get(url).json()
+        return {fund["short_code"]: fund for fund in funds}
+
+    # def _list(self, )
 
 
 class Sec(Source):
@@ -38,7 +56,7 @@ class Sec(Source):
         # TODO: WIP
         super().__init__()
 
-    def get(fund: str):
+    def get(self, fund: str):
         # TODO: WIP
         pass
 
