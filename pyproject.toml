@@ -10,7 +10,6 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.6"
-requests-html = "^0.10.0"
 furl = "^2.1"
 dateparser = "^0.7.2"
 dataclasses = {version = "^0.7.0", python = "3.6"}
