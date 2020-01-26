@@ -26,6 +26,11 @@ jobs:
       run: |
         source $HOME/.poetry/env
         poetry run mkdocs build
+    - name: Set up cache
+      uses: actions/cache@v1
+      with:
+        path: ./site
+        key: site-${{ hashFiles('docs/*') }}-${{ hashFiles('mkdocs.yml') }}
     - name: Deploy Docs
       uses: peaceiris/actions-gh-pages@v2
       env:
