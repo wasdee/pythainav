@@ -1,25 +1,18 @@
-# PythaiNAV
-<!-- ![Language](https://img.shields.io/github/languages/top/CircleOnCircles/pythainav)
-![Start](https://img.shields.io/github/stars/CircleOnCircles/pythainav)
-![Fork](https://img.shields.io/github/forks/CircleOnCircles/pythainav?label=Fork)
-![Watch](https://img.shields.io/github/watchers/CircleOnCircles/pythainav?label=Watch)
-![Issues](https://img.shields.io/github/issues/CircleOnCircles/pythainav)
-![Pull Requests](https://img.shields.io/github/issues-pr/CircleOnCircles/pythainav.svg)
-![Contributors](https://img.shields.io/github/contributors/CircleOnCircles/pythainav.svg) -->
+# PythaiNAV: ทำให้การดึงข้อมูลกองทุนไทยเป็นเรื่องง่าย
 
-![Github_workflow_tatus](https://img.shields.io/github/workflow/status/CircleOnCircles/pythainav/Python%20package)
-![lgtm_gred](https://img.shields.io/lgtm/grade/python/github/CircleOnCircles/pythainav)
-![lgtm_alerts](https://img.shields.io/lgtm/alerts/github/CircleOnCircles/pythainav)
+[![Github_workflow_tatus](https://img.shields.io/github/workflow/status/CircleOnCircles/pythainav/Python%20package)](https://github.com/CircleOnCircles/pythainav/actions?query=workflow%3ATests)
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/CircleOnCircles/pythainav.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/CircleOnCircles/pythainav/context:python)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/CircleOnCircles/pythainav.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/CircleOnCircles/pythainav/alerts/)
+
 
 
 ![cover image](https://github.com/CircleOnCircles/pythainav/raw/master/extra/pythainav.png)
 
 
-ทำให้การดึงข้อมูลกองทุนไทยเป็นเรื่องง่าย
 
 > อยากชวนทุกคนมาร่วมพัฒนา ติชม แนะนำ เพื่อให้ทุกคนเข้าถึงข้อมูลการง่ายขึ้น [เริ่มต้นได้ที่นี้](https://github.com/CircleOnCircles/pythainav/issues) หรือเข้ามา Chat ใน [Discord](https://discord.gg/jjuMcKZ) ได้เลย 😊
 
-Documentation is here. คู่มือการใช้งานอยู่ที่นี่ <https://pythainav.nutchanon.org/>
+📖 Documentation is here. คู่มือการใช้งานอยู่ที่นี่ <https://pythainav.nutchanon.org/>
 
 ## Get Started - เริ่มต้นใช้งาน
 
