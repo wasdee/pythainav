@@ -22,16 +22,19 @@ jobs:
       run: |
         source $HOME/.poetry/env
         poetry install
-    - name: Build Docs
-      run: |
-        source $HOME/.poetry/env
-        poetry run mkdocs build
     - name: Set up cache
+      id: cache
       uses: actions/cache@v1
       with:
         path: ./site
-        key: site-${{ hashFiles('docs/*') }}-${{ hashFiles('mkdocs.yml') }}
+        key: site-${{ hashFiles('docs/*') }}-${{ hashFiles('mkdocs.yml') }}-${{ hashFiles('**/poetry.lock') }}
+    - name: Build Docs
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: |
+        source $HOME/.poetry/env
+        poetry run mkdocs build
     - name: Deploy Docs
+      if: steps.cache.outputs.cache-hit != 'true'
       uses: peaceiris/actions-gh-pages@v2
       env:
         ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
