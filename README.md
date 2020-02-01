@@ -1,4 +1,7 @@
 # PythaiNAV: ทำให้การดึงข้อมูลกองทุนไทยเป็นเรื่องง่าย
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Github_workflow_tatus](https://img.shields.io/github/workflow/status/CircleOnCircles/pythainav/Python%20package)](https://github.com/CircleOnCircles/pythainav/actions?query=workflow%3ATests)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/CircleOnCircles/pythainav.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/CircleOnCircles/pythainav/context:python)
@@ -38,3 +41,22 @@ nav.get("TISTECH-A")
 ## Disclaimer
 
 เราไม่ได้เกี่ยวข้องกับ "finnomena.com" แต่อย่างใด เราไม่รับประกันความเสียหายใดๆทั้งสิ้นที่เกิดจาก แหล่งข้อมูล, library, source code,sample code, documentation, library dependencies และอื่นๆ
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="http://nutchanon.org"><img src="https://avatars2.githubusercontent.com/u/8089231?v=4" width="100px;" alt=""/><br /><sub><b>Nutchanon Ninyawee</b></sub></a><br /><a href="https://github.com/CircleOnCircles/pythainav/commits?author=CircleOnCircles" title="Code">💻</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
