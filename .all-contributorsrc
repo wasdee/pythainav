@@ -1,0 +1,24 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "CircleOnCircles",
+      "name": "Nutchanon Ninyawee",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/8089231?v=4",
+      "profile": "http://nutchanon.org",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "pythainav",
+  "projectOwner": "CircleOnCircles",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
