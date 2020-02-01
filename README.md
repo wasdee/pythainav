@@ -1,6 +1,6 @@
 # PythaiNAV: ทำให้การดึงข้อมูลกองทุนไทยเป็นเรื่องง่าย
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Github_workflow_tatus](https://img.shields.io/github/workflow/status/CircleOnCircles/pythainav/Python%20package)](https://github.com/CircleOnCircles/pythainav/actions?query=workflow%3ATests)
@@ -52,6 +52,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="http://nutchanon.org"><img src="https://avatars2.githubusercontent.com/u/8089231?v=4" width="100px;" alt=""/><br /><sub><b>Nutchanon Ninyawee</b></sub></a><br /><a href="https://github.com/CircleOnCircles/pythainav/commits?author=CircleOnCircles" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/sctnightcore"><img src="https://avatars2.githubusercontent.com/u/23263315?v=4" width="100px;" alt=""/><br /><sub><b>sctnightcore</b></sub></a><br /><a href="https://github.com/CircleOnCircles/pythainav/commits?author=sctnightcore" title="Code">💻</a> <a href="#talk-sctnightcore" title="Talks">📢</a> <a href="#ideas-sctnightcore" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
