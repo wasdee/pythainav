@@ -1,6 +1,7 @@
 # PythaiNAV: ทำให้การดึงข้อมูลกองทุนไทยเป็นเรื่องง่าย
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FCircleOnCircles%2Fpythainav.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FCircleOnCircles%2Fpythainav?ref=badge_shield)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Github_workflow_tatus](https://img.shields.io/github/workflow/status/CircleOnCircles/pythainav/Python%20package)](https://github.com/CircleOnCircles/pythainav/actions?query=workflow%3ATests)
@@ -61,3 +62,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FCircleOnCircles%2Fpythainav.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FCircleOnCircles%2Fpythainav?ref=badge_large)
