@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
-from typing import List
+from typing import  Set
 
 
 @dataclass
@@ -9,5 +9,5 @@ class Nav(object):
 
     value: float
     updated: datetime
-    tags: List[str]
+    tags: Set[str]
     fund: str

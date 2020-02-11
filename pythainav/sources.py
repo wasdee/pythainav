@@ -1,7 +1,7 @@
 from abc import ABC
 from abc import abstractmethod
 from functools import lru_cache
-
+from typing import List
 import dateparser
 import requests
 
@@ -26,7 +26,22 @@ class Finnomena(Source):
     def __init__(self):
         super().__init__()
 
-    def get(self, fund: str):
+	def _find_earliest(self, navs: List[Nav], date: str):
+		navs.sort(lambda x: x.updated, reverse=True)
+
+		date = dateparser.parse(date)
+		for nav in navs:
+			if date >= nav.updated:
+				return nav
+		else:
+			return None
+
+    def get(self, fund: str, date: str=None):
+
+		if date:
+			navs = self.get_range(fund)
+			return self._find_earliest(navs, date)
+
         name2fund = self.list()
 
         url = self.base / "nav" / "latest"
@@ -38,6 +53,28 @@ class Finnomena(Source):
         nav = requests.get(url).json()
         nav = Nav(value=float(nav["value"]), updated=dateparser.parse(nav["nav_date"]), tags={"latest"}, fund=fund)
         return nav
+
+	# cache here should be sensible since the fund is not regulary update
+    # TODO: change or ttl cache with timeout = [1 hour, 1 day]
+	@lru_cache(maxsize=1024)
+	def get_range(self, fund: str, period='SI'):
+		name2fund = self.list()
+
+		url = self.base / "nav" / "q"
+		url['fund'] = name2fund[fund]["id"]
+		url['range'] = period
+
+		# convert to str
+        url = url.url
+
+		navs_response = requests.get(url).json()
+
+		navs = []
+		for nav_resp in navs_response:
+			nav = Nav(value=float(nav_resp["value"]), updated=dateparser.parse(nav_resp["nav_date"]), tags={}, fund=fund)
+			nav.amount = nav_resp["amount"]
+
+        return navs
 
     # cache here should be sensible since the fund is not regulary update
     # TODO: change or ttl cache with timeout = [1 hour, 1 day]
