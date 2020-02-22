@@ -63,4 +63,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 
 ## Related and Alternative
-* [uncleEngineer](https://github.com/UncleEngineer/uncleengineer) - ดึงข้อมูลหุ้น
+
+ตัวที่ใช้ได้ในปัจจุบัน 22/02/20
+* [uncleEngineer](https://github.com/UncleEngineer/uncleengineer) - ดึงข้อมูลหุ้น ณ ปัจจุบัน
+* [pandas-datareader](https://www.patanasongsivilai.com/blog/stock-thai-python/) - ดึงข้อมูลหุ้นย้อนหลังผ่าน `pdr.get_data_yahoo`
+
