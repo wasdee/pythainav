@@ -8,7 +8,7 @@ import warnings
 
 # Update install.rst when updating versions!
 
-VERSIONS = {"pandas": "1.0.1"}
+VERSIONS = {"pandas": "0.25.3"}
 
 
 def _get_version(module: types.ModuleType) -> str:
