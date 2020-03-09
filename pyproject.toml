@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pythainav"
-version = "0.1.3"
+version = "0.1.4"
 description = "a Python interface to pull thai mutual fund NAV"
 authors = ["Nutchanon Ninyawee <me@nutchanon.org>"]
 maintainers = ["Nutchanon Ninyawee <me@nutchanon.org>"]
@@ -9,11 +9,12 @@ repository = "https://github.com/CircleOnCircles/pythainav"
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.6"
-requests-html = "^0.10.0"
+python = "^3.6.8"
 furl = "^2.1"
 dateparser = "^0.7.2"
 dataclasses = {version = "^0.7.0", python = "3.6"}
+requests = "^2.22"
+fuzzywuzzy = {extras = ["speedup"], version = "^0.17.0"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.3"
@@ -22,6 +23,7 @@ mkdocs-material = "^4.6"
 pygments = "^2.5"
 pymdown-extensions = "^6.2"
 mkautodoc = "^0.1.0"
+pandas = "^1.0.1"
 
 [tool.black]
 line-length = 127
@@ -46,6 +48,7 @@ known_third_party = [
     "dateparser",
     "furl"
 ]
+
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"

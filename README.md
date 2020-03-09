@@ -29,18 +29,23 @@ import pythainav as nav
 nav.get("KT-PRECIOUS")
 > Nav(value=4.2696, updated='20/01/2020', tags={'latest'}, fund='KT-PRECIOUS')
 
-nav.get("TISTECH-A")
-> Nav(value=12.9976, updated='21/01/2020', tags={'latest'}, fund='TISTECH-A')
+nav.get("TISTECH-A", date="1 week ago")
+> Nav(value=12.9976, updated='14/01/2020', tags={}, fund='TISTECH-A')
 
+nav.get_all("TISTECH-A")
+> [Nav(value=12.9976, updated='21/01/2020', tags={}, fund='TISTECH-A'), Nav(value=12.9002, updated='20/01/2020', tags={}, fund='TISTECH-A'), ...]
+
+nav.get_all("KT-PRECIOUS", asDataFrame=True)
+> pd.DataFrame [2121 rows x 4 columns]
 ```
 
 ## Source of Data - ที่มาข้อมูล
 
-ตอนนี้ใช้ข้อมูลจาก website <https://www.finnomena.com/fund>
+ดูจาก <https://pythainav.nutchanon.org/datasource/>
 
 ## Disclaimer
 
-เราไม่ได้เกี่ยวข้องกับ "finnomena.com" แต่อย่างใด เราไม่รับประกันความเสียหายใดๆทั้งสิ้นที่เกิดจาก แหล่งข้อมูล, library, source code,sample code, documentation, library dependencies และอื่นๆ
+เราไม่รับประกันความเสียหายใดๆทั้งสิ้นที่เกิดจาก แหล่งข้อมูล, library, source code,sample code, documentation, library dependencies และอื่นๆ
 
 ## Contributors ✨
 
