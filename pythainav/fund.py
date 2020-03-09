@@ -1,3 +1,4 @@
 class Fund:
-	""" a fund object """
-	pass
+    """ a fund object """
+
+    pass
