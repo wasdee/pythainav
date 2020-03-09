@@ -6,8 +6,6 @@ import types
 import warnings
 
 
-# Update install.rst when updating versions!
-
 VERSIONS = {"pandas": "0.25.3"}
 
 
