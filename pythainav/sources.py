@@ -3,6 +3,7 @@ from abc import abstractmethod
 from functools import lru_cache
 from typing import List
 
+import datetime
 import dateparser
 import requests
 
@@ -91,14 +92,97 @@ class Finnomena(Source):
 
 
 class Sec(Source):
-    def __init__(self, subscription_key):
-        # TODO: WIP
+    base = furl("https://api.sec.or.th/")
+
+    def __init__(self, subscription_key: dict = None):
         super().__init__()
+        if subscription_key is None:
+            raise ValueError("Missing subscription key")
+        if not all([True if key in subscription_key else False for key in ['fundfactsheet','funddailyinfo']]):
+            raise ValueError("subscription_key must contain 'fundfactsheet' and 'funddailyinfo' key")
+        self.subscription_key = subscription_key
+        self.headers = {
+            'Content-Type': 'application/json',
+        }
+        self.base_url = {
+            'fundfactsheet': self.base.copy().add(path=['FundFactSheet', 'fund']),
+            'funddailyinfo': self.base.copy().add(path='FundDailyInfo'),
+        }
+        self.session = requests.Session()
+        self.session.headers.update(self.headers)
 
-    def get(self, fund: str):
-        # TODO: WIP
+    def get(self, fund: str, date: str = None):
+        if date:
+            query_date = dateparser.parse(date).date()
+        else:
+            query_date = datetime.date.today()
+        if not fund:
+            raise ValueError("Must specify fund")
+        list_fund = self.search(fund)
+        if list_fund:
+            fund_info = list_fund.pop(0)
+            fund_id = fund_info['proj_id']
+            nav = self.get_nav_from_fund_id(fund_id, query_date)
+            if isinstance(nav, Nav):
+                nav.fund = fund_info['proj_abbr_name']
+                if query_date == datetime.date.today():
+                    nav.tags = {"latest"}
+                return nav
+            else:
+                return nav
+        else:
+            # Fund not found
+            return []
+
         pass
 
+    @lru_cache(maxsize=1024)
+    def get_nav_from_fund_id(self, fund_id: str, nav_date: datetime.date):
+        url = self.base_url['funddailyinfo'].copy().add(path=[fund_id, 'dailynav', nav_date.isoformat()]).url
+        headers = self.headers
+        headers.update({'Ocp-Apim-Subscription-Key': self.subscription_key['funddailyinfo']})
+        response = self.session.get(url, headers=headers)
+        # check status code
+        response.raise_for_status()
+        result = response.json()
+        # Multi class fund
+        if float(result['last_val']) == 0.0 and float(result['previous_val']) == 0:
+            remark_en = result['amc_info'][0]['remark_en']
+            multi_class_nav = {k.strip():float(v) for x in remark_en.split("/") for k,v in [x.split("=")]}
+            list_nav = []
+            for fund_name, nav_val in multi_class_nav.items():
+                n = Nav(value=float(nav_val), updated=dateparser.parse(result["nav_date"]), tags={}, fund=fund_name)
+                list_nav.append(n)
+            return list_nav
+        else:
+            return Nav(value=float(result["last_val"]), updated=dateparser.parse(result["nav_date"]), tags={}, fund=fund_id)
+
+    @lru_cache(maxsize=1024)
     def list(self):
-        # TODO: WIP
-        pass
+        return self.search_fund(name="")
+
+    def search(self, name: str):
+        result = self.search_fund(name)
+        if len(result) == 0:
+            result = self.search_class_fund(name)
+        return result
+
+    @lru_cache(maxsize=1024)
+    def search_fund(self, name: str):
+        url = self.base_url['fundfactsheet'].url
+        headers = self.headers
+        headers.update({'Ocp-Apim-Subscription-Key': self.subscription_key['fundfactsheet']})
+        response = self.session.post(url, headers=headers, json={'name': name})
+        # check status code
+        response.raise_for_status()
+        return response.json()
+
+    @lru_cache(maxsize=1024)
+    def search_class_fund(self, name: str):
+        url = self.base_url['fundfactsheet'].copy().add(path='class_fund').url
+        headers = self.headers
+        headers.update({'Ocp-Apim-Subscription-Key': self.subscription_key['fundfactsheet']})
+        response = self.session.post(url, headers=headers, json={'name': name})
+        # check status code
+        response.raise_for_status()
+        return response.json()
