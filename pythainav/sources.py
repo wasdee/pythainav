@@ -10,7 +10,7 @@ import requests
 from furl import furl
 
 from .nav import Nav
-
+from .utils.date import date_range
 
 class Source(ABC):
     @abstractmethod
@@ -134,7 +134,33 @@ class Sec(Source):
             # Fund not found
             return []
 
-        pass
+    def get_range(self, fund: str, period="SI"):
+        list_fund = self.search(fund)
+        if list_fund:
+            fund_info = list_fund.pop(0)
+            fund_id = fund_info['proj_id']
+            today = datetime.date.today()
+            if period == "SI":
+                if fund_info['regis_date'] != "-":
+                    inception_date = dateparser.parse(fund_info['regis_date']).date()
+                    data_date = date_range(inception_date, today)
+                else:
+                    date_date = [today]
+            else:
+                query_date = dateparser.parse(period).date()
+                data_date = date_range(query_date, today)
+            list_nav = []
+            # Remove weekend
+            data_date = [dd for dd in date_date if dd.isoweekday() not in [6,7]]
+            for dd in data_date:
+                nav = self.get_nav_from_fund_id(fund, dd)
+                if nav:
+                    list_nav.append(nav)
+            return list_nav
+        else:
+            # Fund not found
+            return []
+
 
     @lru_cache(maxsize=1024)
     def get_nav_from_fund_id(self, fund_id: str, nav_date: datetime.date):
