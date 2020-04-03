@@ -144,18 +144,25 @@ class Sec(Source):
         response = self.session.get(url, headers=headers)
         # check status code
         response.raise_for_status()
-        result = response.json()
-        # Multi class fund
-        if float(result['last_val']) == 0.0 and float(result['previous_val']) == 0:
-            remark_en = result['amc_info'][0]['remark_en']
-            multi_class_nav = {k.strip():float(v) for x in remark_en.split("/") for k,v in [x.split("=")]}
-            list_nav = []
-            for fund_name, nav_val in multi_class_nav.items():
-                n = Nav(value=float(nav_val), updated=dateparser.parse(result["nav_date"]), tags={}, fund=fund_name)
-                list_nav.append(n)
-            return list_nav
-        else:
-            return Nav(value=float(result["last_val"]), updated=dateparser.parse(result["nav_date"]), tags={}, fund=fund_id)
+        if response.status_code == 200:
+            result = response.json()
+            # Multi class fund
+            if float(result['last_val']) == 0.0 and float(result['previous_val']) == 0:
+                remark_en = result['amc_info'][0]['remark_en']
+                multi_class_nav = {k.strip():float(v) for x in remark_en.split("/") for k,v in [x.split("=")]}
+                list_nav = []
+                for fund_name, nav_val in multi_class_nav.items():
+                    n = Nav(value=float(nav_val), updated=dateparser.parse(result["nav_date"]), tags={}, fund=fund_name)
+                    n.amount = result['net_asset']
+                    list_nav.append(n)
+                return list_nav
+            else:
+                n = Nav(value=float(result["last_val"]), updated=dateparser.parse(result["nav_date"]), tags={}, fund=fund_id)
+                n.amount = result['net_asset']
+                return n
+        # No content
+        elif response.status_code == 204:
+            return []
 
     @lru_cache(maxsize=1024)
     def list(self):
@@ -175,7 +182,11 @@ class Sec(Source):
         response = self.session.post(url, headers=headers, json={'name': name})
         # check status code
         response.raise_for_status()
-        return response.json()
+        if response.status_code == 200:
+            return response.json()
+        # No content
+        elif response.status_code == 204:
+            return []
 
     @lru_cache(maxsize=1024)
     def search_class_fund(self, name: str):
@@ -185,4 +196,8 @@ class Sec(Source):
         response = self.session.post(url, headers=headers, json={'name': name})
         # check status code
         response.raise_for_status()
-        return response.json()
+        if response.status_code == 200:
+            return response.json()
+        # No content
+        elif response.status_code == 204:
+            return []
