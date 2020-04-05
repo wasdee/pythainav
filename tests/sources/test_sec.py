@@ -242,7 +242,7 @@ class SecSourceTest(unittest.TestCase):
         # date: str
         try:
             self.sec.get("FUND", self.nav_date.isoformat())
-        except:
+        except Exception:
             self.fail("raise exception unexpectedly")
 
         # Empty Fund
@@ -252,11 +252,16 @@ class SecSourceTest(unittest.TestCase):
         # date: datetime.date
         try:
             self.sec.get("FUND", self.nav_date)
-        except:
+        except Exception:
             self.fail("raise exception unexpectedly")
 
         # date: datetime.datetime
         try:
             self.sec.get("FUND", datetime.datetime.combine(self.nav_date, datetime.datetime.min.time()))
-        except:
+        except Exception:
             self.fail("raise exception unexpectedly")
+
+
+    #
+    #   get_range
+    # 
