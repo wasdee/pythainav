@@ -123,14 +123,23 @@ class Sec(Source):
             elif isinstance(date, datetime.datetime):
                 query_date = date.date()
         else:
-            query_date = datetime.date.today()
+            # TODO: Upgrade to smarter https://stackoverflow.com/questions/2224742/most-recent-previous-business-day-in-python
+            # PS. should i add pandas as dep? it's so largeee.
+            query_date = last_bus_day = datetime.date.today()
+            wk_day = datetime.date.weekday(last_bus_day)
+            if wk_day > 4:  # if it's Saturday or Sunday
+                last_bus_day = last_bus_day - datetime.timedelta(days=wk_day - 4)  # then make it Friday
+            query_date = last_bus_day
+
         if not fund:
             raise ValueError("Must specify fund")
+
         list_fund = self.search(fund)
         if list_fund:
             fund_info = list_fund.pop(0)
             fund_id = fund_info["proj_id"]
             nav = self.get_nav_from_fund_id(fund_id, query_date)
+
             if isinstance(nav, Nav):
                 nav.fund = fund_info["proj_abbr_name"]
                 if query_date == datetime.date.today():
@@ -140,7 +149,8 @@ class Sec(Source):
                 return nav
         else:
             # Fund not found
-            return []
+            # due to query_date is a week day that also a holiday
+            return None
 
     def get_range(self, fund: str, period="SI"):
         list_fund = self.search(fund)
@@ -194,7 +204,7 @@ class Sec(Source):
                 return n
         # No content
         elif response.status_code == 204:
-            return []
+            return None
 
     @lru_cache(maxsize=1024)
     def list(self):
