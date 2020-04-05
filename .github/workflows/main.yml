@@ -57,4 +57,4 @@ jobs:
       run: |
         source $HOME/.poetry/env
         poetry run pytest tests --cov=./
-        codecov --token=$CODECOV_TOKEN
+        poetry run codecov --token=$CODECOV_TOKEN
