@@ -2,18 +2,15 @@ import datetime
 import json
 import re
 import unittest
-
 from unittest.mock import patch
 
 import dateparser
+import httpretty
 import requests
 
-import httpretty
-
+from .helpers.sec_data import setup_sec_data
 from pythainav.nav import Nav
 from pythainav.sources import Sec
-
-from .helpers.sec_data import setup_sec_data
 
 
 class SecSourceTest(unittest.TestCase):
