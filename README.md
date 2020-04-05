@@ -4,7 +4,7 @@
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ![Tests](https://github.com/CircleOnCircles/pythainav/workflows/Tests/badge.svg?branch=master)
 [![codecov](https://codecov.io/gh/CircleOnCircles/pythainav/branch/develop/graph/badge.svg)](https://codecov.io/gh/CircleOnCircles/pythainav)
-
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f868488db4ba4266a112c3432301c6b4)](https://www.codacy.com/manual/nutchanon/pythainav?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CircleOnCircles/pythainav&amp;utm_campaign=Badge_Grade)
 
 
 
