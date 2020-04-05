@@ -50,6 +50,9 @@ jobs:
         source $HOME/.poetry/env
         poetry install
     - name: Test
+      env:
+        FUND_FACTSHEET_KEY: ${{ secrets.FUND_FACTSHEET_KEY }}
+        FUND_DAILY_INFO_KEY: ${{ secrets.FUND_DAILY_INFO_KEY }}
       run: |
         source $HOME/.poetry/env
         poetry run pytest tests
