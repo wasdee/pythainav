@@ -1,5 +1,6 @@
 # PythaiNAV: ทำให้การดึงข้อมูลกองทุนไทยเป็นเรื่องง่าย
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/fbe766d5dbf64273adf7a6f1f4398985)](https://app.codacy.com/manual/nutchanon/pythainav?utm_source=github.com&utm_medium=referral&utm_content=CircleOnCircles/pythainav&utm_campaign=Badge_Grade_Settings)
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ![Tests](https://github.com/CircleOnCircles/pythainav/workflows/Tests/badge.svg?branch=master)
