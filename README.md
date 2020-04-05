@@ -2,10 +2,9 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
+![Tests](https://github.com/CircleOnCircles/pythainav/workflows/Tests/badge.svg?branch=master)
+[![codecov](https://codecov.io/gh/CircleOnCircles/pythainav/branch/develop/graph/badge.svg)](https://codecov.io/gh/CircleOnCircles/pythainav)
 
-[![Github_workflow_tatus](https://img.shields.io/github/workflow/status/CircleOnCircles/pythainav/Python%20package)](https://github.com/CircleOnCircles/pythainav/actions?query=workflow%3ATests)
-[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/CircleOnCircles/pythainav.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/CircleOnCircles/pythainav/context:python)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/CircleOnCircles/pythainav.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/CircleOnCircles/pythainav/alerts/)
 
 
 
