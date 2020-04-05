@@ -25,6 +25,16 @@
         "talk",
         "ideas"
       ]
+    },
+    {
+      "login": "angonyfox",
+      "name": "angonyfox",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1295513?v=4",
+      "profile": "https://github.com/angonyfox",
+      "contributions": [
+        "code",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
