@@ -1,6 +1,7 @@
+import random
+
 import factory
 import six
-import random
 
 
 def get_fund_status():

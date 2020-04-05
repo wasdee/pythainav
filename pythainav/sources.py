@@ -1,12 +1,11 @@
+import datetime
 from abc import ABC
 from abc import abstractmethod
 from functools import lru_cache
 from typing import List
 
-import datetime
 import dateparser
 import requests
-
 from furl import furl
 
 from .nav import Nav

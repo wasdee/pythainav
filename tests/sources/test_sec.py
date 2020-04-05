@@ -1,15 +1,16 @@
+import datetime
+import json
 import re
 import unittest
 from unittest.mock import patch
-import httpretty
-import json
-import requests
-import datetime
-import dateparser
 
-from pythainav.sources import Sec
-from pythainav.nav import Nav
+import dateparser
+import httpretty
+import requests
+
 from .helpers.sec_data import setup_sec_data
+from pythainav.nav import Nav
+from pythainav.sources import Sec
 
 
 class SecSourceTest(unittest.TestCase):

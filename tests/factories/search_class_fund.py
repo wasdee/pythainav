@@ -1,5 +1,6 @@
-import factory
 import itertools
+
+import factory
 
 class_type = ["A", "D", "R"]
 class_type_name = ["ชนิดสะสมมูลค่า", "ชนิดจ่ายเงินปันผล", "ชนิดขายคืนหน่วยลงทุนอัตโนมัติ"]
