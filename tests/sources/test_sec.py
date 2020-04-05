@@ -226,7 +226,7 @@ class SecSourceTest(unittest.TestCase):
 
         httpretty.register_uri(httpretty.GET, re.compile("https://api.sec.or.th/FundDailyInfo/.*/dailynav/.*"), status=204)
         result = self.sec.get_nav_from_fund_id("FUND_ID", self.nav_date)
-        self.assertEqual(result, None)
+        self.assertIsNone(result)
 
     def test_get_nav_from_fund_id_multi_class(self):
         httpretty.reset()

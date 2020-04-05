@@ -124,6 +124,7 @@ class Sec(Source):
         else:
             # TODO: Upgrade to smarter https://stackoverflow.com/questions/2224742/most-recent-previous-business-day-in-python
             # PS. should i add pandas as dep? it's so largeee.
+            # TODO: Deal with early morning of weekday
             query_date = last_bus_day = datetime.date.today()
             wk_day = datetime.date.weekday(last_bus_day)
             if wk_day > 4:  # if it's Saturday or Sunday

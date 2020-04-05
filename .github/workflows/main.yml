@@ -53,6 +53,8 @@ jobs:
       env:
         FUND_FACTSHEET_KEY: ${{ secrets.FUND_FACTSHEET_KEY }}
         FUND_DAILY_INFO_KEY: ${{ secrets.FUND_DAILY_INFO_KEY }}
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       run: |
         source $HOME/.poetry/env
-        poetry run pytest tests
+        poetry run pytest tests --cov=./
+        codecov --token=$CODECOV_TOKEN
