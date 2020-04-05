@@ -53,7 +53,10 @@ class Finnomena(Source):
         url = url.url
 
         nav = requests.get(url).json()
-        nav = Nav(value=float(nav["value"]), updated=dateparser.parse(nav["nav_date"]), tags={"latest"}, fund=fund)
+        nav = Nav(value=float(nav["value"]),
+                  updated=dateparser.parse(nav["nav_date"]),
+                  tags={"latest"},
+                  fund=fund)
         return nav
 
     # cache here should be sensible since the fund is not regulary update
@@ -73,7 +76,10 @@ class Finnomena(Source):
 
         navs = []
         for nav_resp in navs_response:
-            nav = Nav(value=float(nav_resp["value"]), updated=dateparser.parse(nav_resp["nav_date"]), tags={}, fund=fund)
+            nav = Nav(value=float(nav_resp["value"]),
+                      updated=dateparser.parse(nav_resp["nav_date"]),
+                      tags={},
+                      fund=fund)
             nav.amount = nav_resp["amount"]
             navs.append(nav)
 
@@ -98,14 +104,20 @@ class Sec(Source):
         super().__init__()
         if subscription_key is None:
             raise ValueError("Missing subscription key")
-        if not all([True if key in subscription_key else False for key in ["fundfactsheet", "funddailyinfo"]]):
-            raise ValueError("subscription_key must contain 'fundfactsheet' and 'funddailyinfo' key")
+        if not all([
+                True if key in subscription_key else False
+                for key in ["fundfactsheet", "funddailyinfo"]
+        ]):
+            raise ValueError(
+                "subscription_key must contain 'fundfactsheet' and 'funddailyinfo' key"
+            )
         self.subscription_key = subscription_key
         self.headers = {
             "Content-Type": "application/json",
         }
         self.base_url = {
-            "fundfactsheet": self.base.copy().add(path=["FundFactsheet", "fund"]),
+            "fundfactsheet":
+            self.base.copy().add(path=["FundFactsheet", "fund"]),
             "funddailyinfo": self.base.copy().add(path="FundDailyInfo"),
         }
         self.session = requests.Session()
@@ -146,7 +158,8 @@ class Sec(Source):
             today = datetime.date.today()
             if period == "SI":
                 if fund_info["regis_date"] != "-":
-                    inception_date = dateparser.parse(fund_info["regis_date"]).date()
+                    inception_date = dateparser.parse(
+                        fund_info["regis_date"]).date()
                     data_date = date_range(inception_date, today)
                 else:
                     date_date = [today]
@@ -155,7 +168,9 @@ class Sec(Source):
                 data_date = date_range(query_date, today)
             list_nav = []
             # Remove weekend
-            data_date = [dd for dd in date_date if dd.isoweekday() not in [6, 7]]
+            data_date = [
+                dd for dd in date_date if dd.isoweekday() not in [6, 7]
+            ]
             for dd in data_date:
                 nav = self.get_nav_from_fund_id(fund, dd)
                 if nav:
@@ -167,26 +182,41 @@ class Sec(Source):
 
     @lru_cache(maxsize=1024)
     def get_nav_from_fund_id(self, fund_id: str, nav_date: datetime.date):
-        url = self.base_url["funddailyinfo"].copy().add(path=[fund_id, "dailynav", nav_date.isoformat()]).url
+        url = self.base_url["funddailyinfo"].copy().add(
+            path=[fund_id, "dailynav",
+                  nav_date.isoformat()]).url
         headers = self.headers
-        headers.update({"Ocp-Apim-Subscription-Key": self.subscription_key["funddailyinfo"]})
+        headers.update({
+            "Ocp-Apim-Subscription-Key":
+            self.subscription_key["funddailyinfo"]
+        })
         response = self.session.get(url, headers=headers)
         # check status code
         response.raise_for_status()
         if response.status_code == 200:
             result = response.json()
             # Multi class fund
-            if float(result["last_val"]) == 0.0 and float(result["previous_val"]) == 0:
+            if float(result["last_val"]) == 0.0 and float(
+                    result["previous_val"]) == 0:
                 remark_en = result["amc_info"][0]["remark_en"]
-                multi_class_nav = {k.strip(): float(v) for x in remark_en.split("/") for k, v in [x.split("=")]}
+                multi_class_nav = {
+                    k.strip(): float(v)
+                    for x in remark_en.split("/") for k, v in [x.split("=")]
+                }
                 list_nav = []
                 for fund_name, nav_val in multi_class_nav.items():
-                    n = Nav(value=float(nav_val), updated=dateparser.parse(result["nav_date"]), tags={}, fund=fund_name)
+                    n = Nav(value=float(nav_val),
+                            updated=dateparser.parse(result["nav_date"]),
+                            tags={},
+                            fund=fund_name)
                     n.amount = result["net_asset"]
                     list_nav.append(n)
                 return list_nav
             else:
-                n = Nav(value=float(result["last_val"]), updated=dateparser.parse(result["nav_date"]), tags={}, fund=fund_id)
+                n = Nav(value=float(result["last_val"]),
+                        updated=dateparser.parse(result["nav_date"]),
+                        tags={},
+                        fund=fund_id)
                 n.amount = result["net_asset"]
                 return n
         # No content
@@ -207,7 +237,10 @@ class Sec(Source):
     def search_fund(self, name: str):
         url = self.base_url["fundfactsheet"].url
         headers = self.headers
-        headers.update({"Ocp-Apim-Subscription-Key": self.subscription_key["fundfactsheet"]})
+        headers.update({
+            "Ocp-Apim-Subscription-Key":
+            self.subscription_key["fundfactsheet"]
+        })
         response = self.session.post(url, headers=headers, json={"name": name})
         # check status code
         response.raise_for_status()
@@ -221,7 +254,10 @@ class Sec(Source):
     def search_class_fund(self, name: str):
         url = self.base_url["fundfactsheet"].copy().add(path="class_fund").url
         headers = self.headers
-        headers.update({"Ocp-Apim-Subscription-Key": self.subscription_key["fundfactsheet"]})
+        headers.update({
+            "Ocp-Apim-Subscription-Key":
+            self.subscription_key["fundfactsheet"]
+        })
         response = self.session.post(url, headers=headers, json={"name": name})
         # check status code
         response.raise_for_status()

@@ -3,7 +3,9 @@ import itertools
 import factory
 
 class_type = ["A", "D", "R"]
-class_type_name = ["ชนิดสะสมมูลค่า", "ชนิดจ่ายเงินปันผล", "ชนิดขายคืนหน่วยลงทุนอัตโนมัติ"]
+class_type_name = [
+    "ชนิดสะสมมูลค่า", "ชนิดจ่ายเงินปันผล", "ชนิดขายคืนหน่วยลงทุนอัตโนมัติ"
+]
 
 
 def get_class_name(o):

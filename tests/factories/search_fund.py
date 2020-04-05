@@ -19,9 +19,12 @@ class SearchFundFactory(factory.Factory):
         model = dict
 
     proj_id = factory.Sequence(lambda n: "M{:0>4}_25{:0>2}".format(n, n))
-    regis_id = factory.Sequence(lambda n: "{:0>3}_25{:0>2}".format(n, n) if n % 5 == 0 else "-")
-    regis_date = factory.Sequence(lambda n: "2020-01-{:0>2}".format(n + 1) if n % 5 == 0 else "-")
-    cancel_date = factory.Sequence(lambda n: "2020-01-{:0>2}".format(n + 1) if n % 5 == 0 else "-")
+    regis_id = factory.Sequence(lambda n: "{:0>3}_25{:0>2}".format(n, n)
+                                if n % 5 == 0 else "-")
+    regis_date = factory.Sequence(lambda n: "2020-01-{:0>2}".format(n + 1)
+                                  if n % 5 == 0 else "-")
+    cancel_date = factory.Sequence(lambda n: "2020-01-{:0>2}".format(n + 1)
+                                   if n % 5 == 0 else "-")
     proj_name_th = factory.Sequence(lambda n: "กองทุน {}".format(n))
     proj_name_en = factory.Sequence(lambda n: "Fund {}".format(n))
     proj_abbr_name = factory.Sequence(lambda n: "FUND-{:0>2}".format(n))
