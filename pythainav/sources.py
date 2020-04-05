@@ -37,7 +37,7 @@ class Finnomena(Source):
         for nav in navs:
             if date >= nav.updated:
                 return nav
-		return None
+        return None
 
     def get(self, fund: str, date: str = None):
 
