@@ -1,21 +1,23 @@
 # PythaiNAV: ทำให้การดึงข้อมูลกองทุนไทยเป็นเรื่องง่าย
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Github_workflow_tatus](https://img.shields.io/github/workflow/status/CircleOnCircles/pythainav/Python%20package)](https://github.com/CircleOnCircles/pythainav/actions?query=workflow%3ATests)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/CircleOnCircles/pythainav.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/CircleOnCircles/pythainav/context:python)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/CircleOnCircles/pythainav.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/CircleOnCircles/pythainav/alerts/)
 
-
-
 ![cover image](https://github.com/CircleOnCircles/pythainav/raw/master/extra/pythainav.png)
 
+> อยากชวนทุกคนมาร่วมพัฒนา ติชม แนะนำ เพื่อให้ทุกคนเข้าถึงข้อมูลการง่ายขึ้น
+> [เริ่มต้นได้ที่นี้](https://github.com/CircleOnCircles/pythainav/issues)
+> หรือเข้ามา Chat ใน [Discord](https://discord.gg/jjuMcKZ) ได้เลย 😊
 
-
-> อยากชวนทุกคนมาร่วมพัฒนา ติชม แนะนำ เพื่อให้ทุกคนเข้าถึงข้อมูลการง่ายขึ้น [เริ่มต้นได้ที่นี้](https://github.com/CircleOnCircles/pythainav/issues) หรือเข้ามา Chat ใน [Discord](https://discord.gg/jjuMcKZ) ได้เลย 😊
-
-📖 Documentation is here. คู่มือการใช้งานอยู่ที่นี่ <https://pythainav.nutchanon.org/>
+📖 Documentation is here. คู่มือการใช้งานอยู่ที่นี่
+<https://pythainav.nutchanon.org/>
 
 ## Get Started - เริ่มต้นใช้งาน
 
@@ -45,11 +47,13 @@ nav.get_all("KT-PRECIOUS", asDataFrame=True)
 
 ## Disclaimer
 
-เราไม่รับประกันความเสียหายใดๆทั้งสิ้นที่เกิดจาก แหล่งข้อมูล, library, source code,sample code, documentation, library dependencies และอื่นๆ
+เราไม่รับประกันความเสียหายใดๆทั้งสิ้นที่เกิดจาก แหล่งข้อมูล, library, source
+code,sample code, documentation, library dependencies และอื่นๆ
 
 ## Contributors ✨
 
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+Thanks goes to these wonderful people
+([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
@@ -64,12 +68,18 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+This project follows the
+[all-contributors](https://github.com/all-contributors/all-contributors)
+specification. Contributions of any kind welcome!
 
 ## Related and Alternative
 
 ตัวที่ใช้ได้ในปัจจุบัน 22/02/20
-* [uncleEngineer](https://github.com/UncleEngineer/uncleengineer) - ดึงข้อมูลหุ้น ณ ปัจจุบัน
-* [pandas-datareader](https://www.patanasongsivilai.com/blog/stock-thai-python/) - ดึงข้อมูลหุ้นย้อนหลังผ่าน `pdr.get_data_yahoo`
+
+- [uncleEngineer](https://github.com/UncleEngineer/uncleengineer) -
+  ดึงข้อมูลหุ้น ณ ปัจจุบัน
+- [pandas-datareader](https://www.patanasongsivilai.com/blog/stock-thai-python/) -
+  ดึงข้อมูลหุ้นย้อนหลังผ่าน `pdr.get_data_yahoo`
