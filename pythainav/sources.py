@@ -99,6 +99,7 @@ class Sec(Source):
     def __init__(self, subscription_key: dict = None):
         super().__init__()
         if subscription_key is None:
+            # TODO: Create specific exception for this
             raise ValueError("Missing subscription key")
         if not all([True if key in subscription_key else False for key in ["fundfactsheet", "funddailyinfo"]]):
             raise ValueError("subscription_key must contain 'fundfactsheet' and 'funddailyinfo' key")
