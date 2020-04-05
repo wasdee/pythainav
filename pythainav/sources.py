@@ -143,7 +143,6 @@ class Sec(Source):
         list_fund = self.search(fund)
         if list_fund:
             fund_info = list_fund.pop(0)
-            fund_id = fund_info['proj_id']
             today = datetime.date.today()
             if period == "SI":
                 if fund_info['regis_date'] != "-":

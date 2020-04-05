@@ -1,5 +1,4 @@
 import factory
-import six
 import itertools
 
 class_type = ['A', 'D', 'R']
