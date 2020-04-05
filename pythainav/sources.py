@@ -105,7 +105,7 @@ class Sec(Source):
             'Content-Type': 'application/json',
         }
         self.base_url = {
-            'fundfactsheet': self.base.copy().add(path=['FundFactSheet', 'fund']),
+            'fundfactsheet': self.base.copy().add(path=['FundFactsheet', 'fund']),
             'funddailyinfo': self.base.copy().add(path='FundDailyInfo'),
         }
         self.session = requests.Session()
