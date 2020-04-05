@@ -15,7 +15,7 @@ class AMCInfoFactory(factory.Factory):
             remark_en="Fund-A= 10.3393/Fund-D= 10.3516/Fund-R= 10.3055",
         )
 
-    unique_id = factory.Sequence(lambda n: 'C{:0>10}'.format(n))
+    unique_id = factory.Sequence(lambda n: "C{:0>10}".format(n))
     sell_price = 10.9585
     buy_price = 10.7226
     sell_swap_price = 10.9585
@@ -25,7 +25,6 @@ class AMCInfoFactory(factory.Factory):
 
 
 class DailyNavFactory(factory.Factory):
-
     class Meta:
         model = dict
 

@@ -99,15 +99,15 @@ class Sec(Source):
         super().__init__()
         if subscription_key is None:
             raise ValueError("Missing subscription key")
-        if not all([True if key in subscription_key else False for key in ['fundfactsheet', 'funddailyinfo']]):
+        if not all([True if key in subscription_key else False for key in ["fundfactsheet", "funddailyinfo"]]):
             raise ValueError("subscription_key must contain 'fundfactsheet' and 'funddailyinfo' key")
         self.subscription_key = subscription_key
         self.headers = {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
         }
         self.base_url = {
-            'fundfactsheet': self.base.copy().add(path=['FundFactsheet', 'fund']),
-            'funddailyinfo': self.base.copy().add(path='FundDailyInfo'),
+            "fundfactsheet": self.base.copy().add(path=["FundFactsheet", "fund"]),
+            "funddailyinfo": self.base.copy().add(path="FundDailyInfo"),
         }
         self.session = requests.Session()
         self.session.headers.update(self.headers)
@@ -127,10 +127,10 @@ class Sec(Source):
         list_fund = self.search(fund)
         if list_fund:
             fund_info = list_fund.pop(0)
-            fund_id = fund_info['proj_id']
+            fund_id = fund_info["proj_id"]
             nav = self.get_nav_from_fund_id(fund_id, query_date)
             if isinstance(nav, Nav):
-                nav.fund = fund_info['proj_abbr_name']
+                nav.fund = fund_info["proj_abbr_name"]
                 if query_date == datetime.date.today():
                     nav.tags = {"latest"}
                 return nav
@@ -146,8 +146,8 @@ class Sec(Source):
             fund_info = list_fund.pop(0)
             today = datetime.date.today()
             if period == "SI":
-                if fund_info['regis_date'] != "-":
-                    inception_date = dateparser.parse(fund_info['regis_date']).date()
+                if fund_info["regis_date"] != "-":
+                    inception_date = dateparser.parse(fund_info["regis_date"]).date()
                     data_date = date_range(inception_date, today)
                 else:
                     date_date = [today]
@@ -168,27 +168,27 @@ class Sec(Source):
 
     @lru_cache(maxsize=1024)
     def get_nav_from_fund_id(self, fund_id: str, nav_date: datetime.date):
-        url = self.base_url['funddailyinfo'].copy().add(path=[fund_id, 'dailynav', nav_date.isoformat()]).url
+        url = self.base_url["funddailyinfo"].copy().add(path=[fund_id, "dailynav", nav_date.isoformat()]).url
         headers = self.headers
-        headers.update({'Ocp-Apim-Subscription-Key': self.subscription_key['funddailyinfo']})
+        headers.update({"Ocp-Apim-Subscription-Key": self.subscription_key["funddailyinfo"]})
         response = self.session.get(url, headers=headers)
         # check status code
         response.raise_for_status()
         if response.status_code == 200:
             result = response.json()
             # Multi class fund
-            if float(result['last_val']) == 0.0 and float(result['previous_val']) == 0:
-                remark_en = result['amc_info'][0]['remark_en']
+            if float(result["last_val"]) == 0.0 and float(result["previous_val"]) == 0:
+                remark_en = result["amc_info"][0]["remark_en"]
                 multi_class_nav = {k.strip(): float(v) for x in remark_en.split("/") for k, v in [x.split("=")]}
                 list_nav = []
                 for fund_name, nav_val in multi_class_nav.items():
                     n = Nav(value=float(nav_val), updated=dateparser.parse(result["nav_date"]), tags={}, fund=fund_name)
-                    n.amount = result['net_asset']
+                    n.amount = result["net_asset"]
                     list_nav.append(n)
                 return list_nav
             else:
                 n = Nav(value=float(result["last_val"]), updated=dateparser.parse(result["nav_date"]), tags={}, fund=fund_id)
-                n.amount = result['net_asset']
+                n.amount = result["net_asset"]
                 return n
         # No content
         elif response.status_code == 204:
@@ -206,10 +206,10 @@ class Sec(Source):
 
     @lru_cache(maxsize=1024)
     def search_fund(self, name: str):
-        url = self.base_url['fundfactsheet'].url
+        url = self.base_url["fundfactsheet"].url
         headers = self.headers
-        headers.update({'Ocp-Apim-Subscription-Key': self.subscription_key['fundfactsheet']})
-        response = self.session.post(url, headers=headers, json={'name': name})
+        headers.update({"Ocp-Apim-Subscription-Key": self.subscription_key["fundfactsheet"]})
+        response = self.session.post(url, headers=headers, json={"name": name})
         # check status code
         response.raise_for_status()
         if response.status_code == 200:
@@ -220,10 +220,10 @@ class Sec(Source):
 
     @lru_cache(maxsize=1024)
     def search_class_fund(self, name: str):
-        url = self.base_url['fundfactsheet'].copy().add(path='class_fund').url
+        url = self.base_url["fundfactsheet"].copy().add(path="class_fund").url
         headers = self.headers
-        headers.update({'Ocp-Apim-Subscription-Key': self.subscription_key['fundfactsheet']})
-        response = self.session.post(url, headers=headers, json={'name': name})
+        headers.update({"Ocp-Apim-Subscription-Key": self.subscription_key["fundfactsheet"]})
+        response = self.session.post(url, headers=headers, json={"name": name})
         # check status code
         response.raise_for_status()
         if response.status_code == 200:
