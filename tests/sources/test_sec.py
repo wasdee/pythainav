@@ -11,6 +11,7 @@ from pythainav.sources import Sec
 from pythainav.nav import Nav
 from .helpers.sec_data import setup_sec_data
 
+
 class SecSourceTest(unittest.TestCase):
 
     @classmethod
@@ -20,7 +21,7 @@ class SecSourceTest(unittest.TestCase):
         self.subscription_key = {'fundfactsheet': 'fact_key', 'funddailyinfo': 'daily_key'}
         self.sec = Sec(subscription_key=self.subscription_key)
 
-        self.nav_date = datetime.date(2020,1,1)
+        self.nav_date = datetime.date(2020, 1, 1)
 
     @classmethod
     def tearDownClass(cls):
@@ -52,10 +53,10 @@ class SecSourceTest(unittest.TestCase):
 
         test_sec = Sec(subscription_key={'fundfactsheet': 'some_key', 'funddailyinfo': 'some_key'})
         self.assertEqual(list(test_sec.subscription_key.keys()), ['fundfactsheet', 'funddailyinfo'])
-        
-    # 
+
+    #
     #   search_fund
-    # 
+    #
     def test_search_fund_setting_headers(self):
         self.sec.search_fund("FUND")
 
@@ -74,8 +75,8 @@ class SecSourceTest(unittest.TestCase):
         )]
 
         httpretty.register_uri(httpretty.POST,
-                            "https://api.sec.or.th/FundFactsheet/fund",
-                            responses=error_responses)
+                               "https://api.sec.or.th/FundFactsheet/fund",
+                               responses=error_responses)
         with self.assertRaises(requests.exceptions.HTTPError):
             self.sec.search_fund("FUND")
 
@@ -90,14 +91,14 @@ class SecSourceTest(unittest.TestCase):
         httpretty.reset()
 
         httpretty.register_uri(httpretty.POST,
-                            "https://api.sec.or.th/FundFactsheet/fund",
-                            status=204)
+                               "https://api.sec.or.th/FundFactsheet/fund",
+                               status=204)
         result = self.sec.search_fund("FUND")
         self.assertEqual(result, [])
 
     #
     #   search_class_fund
-    # 
+    #
     def test_search_class_fund_setting_headers(self):
         self.sec.search_class_fund("FUND")
 
@@ -116,8 +117,8 @@ class SecSourceTest(unittest.TestCase):
         )]
 
         httpretty.register_uri(httpretty.POST,
-                            "https://api.sec.or.th/FundFactsheet/fund/class_fund",
-                            responses=error_responses)
+                               "https://api.sec.or.th/FundFactsheet/fund/class_fund",
+                               responses=error_responses)
         with self.assertRaises(requests.exceptions.HTTPError):
             self.sec.search_class_fund("FUND")
 
@@ -132,14 +133,14 @@ class SecSourceTest(unittest.TestCase):
         httpretty.reset()
 
         httpretty.register_uri(httpretty.POST,
-                            "https://api.sec.or.th/FundFactsheet/fund/class_fund",
-                            status=204)
+                               "https://api.sec.or.th/FundFactsheet/fund/class_fund",
+                               status=204)
         result = self.sec.search_class_fund("FUND")
         self.assertEqual(result, [])
 
     #
     #   search
-    # 
+    #
     @patch('pythainav.sources.Sec.search_fund')
     @patch('pythainav.sources.Sec.search_class_fund')
     def test_search_result(self, mock_search_fund, mock_search_class_fund):
@@ -164,7 +165,7 @@ class SecSourceTest(unittest.TestCase):
 
     #
     #   list
-    # 
+    #
     def test_list_result(self):
         result = self.sec.list()
 
@@ -172,7 +173,7 @@ class SecSourceTest(unittest.TestCase):
 
     #
     #   get_nav_from_fund_id
-    # 
+    #
     def test_get_nav_from_fund_id_setting_headers(self):
         self.sec.get_nav_from_fund_id("FUND_ID", self.nav_date)
 
@@ -191,8 +192,8 @@ class SecSourceTest(unittest.TestCase):
         )]
 
         httpretty.register_uri(httpretty.GET,
-                            re.compile("https://api.sec.or.th/FundDailyInfo/.*/dailynav/.*"),
-                            responses=error_responses)
+                               re.compile("https://api.sec.or.th/FundDailyInfo/.*/dailynav/.*"),
+                               responses=error_responses)
         with self.assertRaises(requests.exceptions.HTTPError):
             self.sec.get_nav_from_fund_id("FUND_ID", self.nav_date)
 
@@ -209,9 +210,9 @@ class SecSourceTest(unittest.TestCase):
         httpretty.reset()
 
         httpretty.register_uri(httpretty.GET,
-                            re.compile("https://api.sec.or.th/FundDailyInfo/.*/dailynav/.*"),
-                            status=204
-        )
+                               re.compile("https://api.sec.or.th/FundDailyInfo/.*/dailynav/.*"),
+                               status=204
+                               )
         result = self.sec.get_nav_from_fund_id("FUND_ID", self.nav_date)
         self.assertEqual(result, [])
 
@@ -219,13 +220,13 @@ class SecSourceTest(unittest.TestCase):
         httpretty.reset()
 
         httpretty.register_uri(httpretty.GET,
-                            re.compile("https://api.sec.or.th/FundDailyInfo/.*/dailynav/.*"),
-                            body=json.dumps(self.multi_class_dailynav_data)
-        )
+                               re.compile("https://api.sec.or.th/FundDailyInfo/.*/dailynav/.*"),
+                               body=json.dumps(self.multi_class_dailynav_data)
+                               )
 
         fund_name = "FUND_ID"
         remark_en = self.multi_class_dailynav_data['amc_info'][0]['remark_en']
-        multi_class_nav = {k.strip():float(v) for x in remark_en.split("/") for k,v in [x.split("=")]}
+        multi_class_nav = {k.strip(): float(v) for x in remark_en.split("/") for k, v in [x.split("=")]}
         expect_return = []
         for fund_name, nav_val in multi_class_nav.items():
             n = Nav(value=float(nav_val), updated=dateparser.parse(self.multi_class_dailynav_data["nav_date"]), tags={}, fund=fund_name)
@@ -237,7 +238,7 @@ class SecSourceTest(unittest.TestCase):
 
     #
     #   get
-    # 
+    #
     def test_get_params(self):
         # date: str
         try:
@@ -261,7 +262,6 @@ class SecSourceTest(unittest.TestCase):
         except Exception:
             self.fail("raise exception unexpectedly")
 
-
     #
     #   get_range
-    # 
+    #

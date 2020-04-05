@@ -12,6 +12,7 @@ from furl import furl
 from .nav import Nav
 from .utils.date import date_range
 
+
 class Source(ABC):
     @abstractmethod
     def get(self, fund: str):
@@ -98,7 +99,7 @@ class Sec(Source):
         super().__init__()
         if subscription_key is None:
             raise ValueError("Missing subscription key")
-        if not all([True if key in subscription_key else False for key in ['fundfactsheet','funddailyinfo']]):
+        if not all([True if key in subscription_key else False for key in ['fundfactsheet', 'funddailyinfo']]):
             raise ValueError("subscription_key must contain 'fundfactsheet' and 'funddailyinfo' key")
         self.subscription_key = subscription_key
         self.headers = {
@@ -155,7 +156,7 @@ class Sec(Source):
                 data_date = date_range(query_date, today)
             list_nav = []
             # Remove weekend
-            data_date = [dd for dd in date_date if dd.isoweekday() not in [6,7]]
+            data_date = [dd for dd in date_date if dd.isoweekday() not in [6, 7]]
             for dd in data_date:
                 nav = self.get_nav_from_fund_id(fund, dd)
                 if nav:
@@ -164,7 +165,6 @@ class Sec(Source):
         else:
             # Fund not found
             return []
-
 
     @lru_cache(maxsize=1024)
     def get_nav_from_fund_id(self, fund_id: str, nav_date: datetime.date):
@@ -179,7 +179,7 @@ class Sec(Source):
             # Multi class fund
             if float(result['last_val']) == 0.0 and float(result['previous_val']) == 0:
                 remark_en = result['amc_info'][0]['remark_en']
-                multi_class_nav = {k.strip():float(v) for x in remark_en.split("/") for k,v in [x.split("=")]}
+                multi_class_nav = {k.strip(): float(v) for x in remark_en.split("/") for k, v in [x.split("=")]}
                 list_nav = []
                 for fund_name, nav_val in multi_class_nav.items():
                     n = Nav(value=float(nav_val), updated=dateparser.parse(result["nav_date"]), tags={}, fund=fund_name)
