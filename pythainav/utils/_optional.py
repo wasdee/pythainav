@@ -1,3 +1,4 @@
+# Borrow from
 # https://github.com/pandas-dev/pandas/blob/774498b667e82bf6e826da44135a3ef99590ead6/pandas/compat/_optional.py
 
 import distutils.version
