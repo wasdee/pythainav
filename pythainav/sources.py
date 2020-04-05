@@ -113,7 +113,12 @@ class Sec(Source):
 
     def get(self, fund: str, date: str = None):
         if date:
-            query_date = dateparser.parse(date).date()
+            if isinstance(date, str):
+                query_date = dateparser.parse(date).date()
+            elif isinstance(date, datetime.date):
+                query_date = date
+            elif isinstance(date, datetime.datetime):
+                query_date = date.date()
         else:
             query_date = datetime.date.today()
         if not fund:
