@@ -1,3 +1,5 @@
+import pytest
+
 import pythainav as nav
 
 
@@ -26,6 +28,7 @@ def test_get_all_pandas():
     assert isinstance(df, pd.DataFrame)
 
 
+@pytest.mark.skip(reason="For dev only, required real api key")
 def test_sec_source():
     from decouple import config
 
