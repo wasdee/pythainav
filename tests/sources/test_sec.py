@@ -98,7 +98,7 @@ class SecSourceTest(unittest.TestCase):
 
         httpretty.register_uri(httpretty.POST, "https://api.sec.or.th/FundFactsheet/fund", status=204)
         result = self.sec.search_fund("FUND")
-        self.assertEqual(result, [])
+        self.assertEqual(result, None)
 
     #
     #   search_class_fund
@@ -142,13 +142,13 @@ class SecSourceTest(unittest.TestCase):
 
         httpretty.register_uri(httpretty.POST, "https://api.sec.or.th/FundFactsheet/fund/class_fund", status=204)
         result = self.sec.search_class_fund("FUND")
-        self.assertEqual(result, [])
+        self.assertEqual(result, None)
 
     #
     #   search
     #
-    @patch("pythainav.sources.Sec.search_fund")
     @patch("pythainav.sources.Sec.search_class_fund")
+    @patch("pythainav.sources.Sec.search_fund")
     def test_search_result(self, mock_search_fund, mock_search_class_fund):
         # search_fund found fund
         mock_search_fund.return_value = self.search_fund_data
@@ -157,17 +157,17 @@ class SecSourceTest(unittest.TestCase):
         self.assertEqual(result, self.search_fund_data)
 
         # search_fund return empty
-        mock_search_fund.return_value = []
+        mock_search_fund.return_value = None
         mock_search_class_fund.return_value = self.search_class_fund_data
         result = self.sec.search("FUND")
         self.assertTrue(mock_search_class_fund.called)
         self.assertEqual(result, self.search_class_fund_data)
 
         # both return empty
-        mock_search_fund.return_value = []
-        mock_search_class_fund.return_value = []
+        mock_search_fund.return_value = None
+        mock_search_class_fund.return_value = None
         result = self.sec.search("FUND")
-        self.assertEqual(result, [])
+        self.assertEqual(result, None)
 
     #
     #   list
@@ -226,7 +226,7 @@ class SecSourceTest(unittest.TestCase):
 
         httpretty.register_uri(httpretty.GET, re.compile("https://api.sec.or.th/FundDailyInfo/.*/dailynav/.*"), status=204)
         result = self.sec.get_nav_from_fund_id("FUND_ID", self.nav_date)
-        self.assertEqual(result, [])
+        self.assertEqual(result, None)
 
     def test_get_nav_from_fund_id_multi_class(self):
         httpretty.reset()
