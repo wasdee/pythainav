@@ -1,15 +1,20 @@
 import datetime
 import json
 import re
+import typing
+
 from dataclasses import dataclass
+
 import dateparser
 import pytest
 import requests
+
 import httpretty
 import mock
-import typing
+
 from pythainav.nav import Nav
 from pythainav.sources import Sec
+
 from .helpers.sec_data import setup_sec_data
 
 
