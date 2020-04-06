@@ -227,7 +227,7 @@ class Sec(Source):
 
     def search(self, name: str):
         result = self.search_fund(name)
-        if len(result) == 0:
+        if result is None:
             result = self.search_class_fund(name)
         return result
 
