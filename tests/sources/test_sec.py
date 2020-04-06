@@ -1,31 +1,28 @@
 import datetime
 import json
 import re
-import unittest
-import mock
-
+from dataclasses import dataclass
 import dateparser
+import pytest
 import requests
-
 import httpretty
-
+import mock
+import typing
 from pythainav.nav import Nav
 from pythainav.sources import Sec
-
 from .helpers.sec_data import setup_sec_data
-from dataclasses import dataclass
-import contextlib
-import pytest
+
 
 @dataclass
 class SecData:
-    search_fund_data: 'typing.Any' = object()
-    search_class_fund_data: 'typing.Any' = object()
-    dailynav_data: 'typing.Any' = object()
-    multi_class_dailynav_data: 'typing.Any' = object()
-    subscription_key: 'typing.Any' = object()
-    sec: 'typing.Any' = object()
-    nav_date: 'typing.Any' = object()
+    search_fund_data: "typing.Any" = object()
+    search_class_fund_data: "typing.Any" = object()
+    dailynav_data: "typing.Any" = object()
+    multi_class_dailynav_data: "typing.Any" = object()
+    subscription_key: "typing.Any" = object()
+    sec: "typing.Any" = object()
+    nav_date: "typing.Any" = object()
+
 
 @pytest.fixture
 def sec_data():
@@ -39,9 +36,11 @@ def sec_data():
     httpretty.disable()
     httpretty.reset()
 
+
 def test_no_subscription_key():
     with pytest.raises(ValueError):
         Sec()
+
 
 def test_subscription_key_is_none():
     subscription_key = None
@@ -50,6 +49,7 @@ def test_subscription_key_is_none():
 
     with pytest.raises(ValueError):
         Sec(subscription_key=subscription_key)
+
 
 def test_subscription_key_missing_key():
 
@@ -65,6 +65,7 @@ def test_subscription_key_missing_key():
     test_sec = Sec(subscription_key={"fundfactsheet": "some_key", "funddailyinfo": "some_key"})
     assert list(test_sec.subscription_key.keys()) == ["fundfactsheet", "funddailyinfo"]
 
+
 #
 #   search_fund
 #
@@ -74,6 +75,7 @@ def test_search_fund_setting_headers(sec_data):
     # contain Ocp-Apim-Subscription-Key in header
     assert "Ocp-Apim-Subscription-Key" in httpretty.last_request().headers
     assert httpretty.last_request().headers["Ocp-Apim-Subscription-Key"] == sec_data.subscription_key["fundfactsheet"]
+
 
 def test_search_fund_invalid_key(sec_data):
     httpretty.reset()
@@ -93,11 +95,13 @@ def test_search_fund_invalid_key(sec_data):
     with pytest.raises(requests.exceptions.HTTPError):
         sec_data.sec.search_fund("FUND")
 
+
 def test_search_fund_success_with_content(sec_data):
     # status code 200
     result = sec_data.sec.search_fund("FUND")
 
     assert result == sec_data.search_fund_data
+
 
 def test_search_fund_no_content(sec_data):
     # status code 204
@@ -106,6 +110,7 @@ def test_search_fund_no_content(sec_data):
     httpretty.register_uri(httpretty.POST, "https://api.sec.or.th/FundFactsheet/fund", status=204)
     result = sec_data.sec.search_fund("FUND")
     assert result == []
+
 
 #
 #   search_class_fund
@@ -116,6 +121,7 @@ def test_search_class_fund_setting_headers(sec_data):
     # contain Ocp-Apim-Subscription-Key in header
     assert "Ocp-Apim-Subscription-Key" in httpretty.last_request().headers
     assert httpretty.last_request().headers["Ocp-Apim-Subscription-Key"] == sec_data.subscription_key["fundfactsheet"]
+
 
 def test_search_class_fund_invalid_key(sec_data):
     httpretty.reset()
@@ -131,17 +137,17 @@ def test_search_class_fund_invalid_key(sec_data):
         )
     ]
 
-    httpretty.register_uri(
-        httpretty.POST, "https://api.sec.or.th/FundFactsheet/fund/class_fund", responses=error_responses
-    )
+    httpretty.register_uri(httpretty.POST, "https://api.sec.or.th/FundFactsheet/fund/class_fund", responses=error_responses)
     with pytest.raises(requests.exceptions.HTTPError):
         sec_data.sec.search_class_fund("FUND")
+
 
 def test_search_class_fund_success_with_content(sec_data):
     # status code 200
     result = sec_data.sec.search_class_fund("FUND")
 
     assert result == sec_data.search_class_fund_data
+
 
 def test_search_class_fund_no_content(sec_data):
     # status code 204
@@ -150,6 +156,7 @@ def test_search_class_fund_no_content(sec_data):
     httpretty.register_uri(httpretty.POST, "https://api.sec.or.th/FundFactsheet/fund/class_fund", status=204)
     result = sec_data.sec.search_class_fund("FUND")
     assert result == []
+
 
 #
 #   search
@@ -175,6 +182,7 @@ def test_search_result(mock_search_fund, mock_search_class_fund, sec_data):
     result = sec_data.sec.search("FUND")
     assert result == []
 
+
 #
 #   list
 #
@@ -182,6 +190,7 @@ def test_list_result(sec_data):
     result = sec_data.sec.list()
 
     assert len(result) == len(sec_data.search_fund_data)
+
 
 #
 #   get_nav_from_fund_id
@@ -192,6 +201,7 @@ def test_get_nav_from_fund_id_setting_headers(sec_data):
     # contain Ocp-Apim-Subscription-Key in header
     assert "Ocp-Apim-Subscription-Key" in httpretty.last_request().headers
     assert httpretty.last_request().headers["Ocp-Apim-Subscription-Key"] == sec_data.subscription_key["funddailyinfo"]
+
 
 def test_get_nav_from_fund_id_invalid_key(sec_data):
     httpretty.reset()
@@ -213,6 +223,7 @@ def test_get_nav_from_fund_id_invalid_key(sec_data):
     with pytest.raises(requests.exceptions.HTTPError):
         sec_data.sec.get_nav_from_fund_id("FUND_ID", sec_data.nav_date)
 
+
 def test_get_nav_from_fund_id_success_with_content(sec_data):
     # status code 200
     expect_return = Nav(
@@ -226,6 +237,7 @@ def test_get_nav_from_fund_id_success_with_content(sec_data):
 
     assert result == expect_return
 
+
 def test_get_nav_from_fund_id_no_content(sec_data):
     # status code 204
     httpretty.reset()
@@ -233,6 +245,7 @@ def test_get_nav_from_fund_id_no_content(sec_data):
     httpretty.register_uri(httpretty.GET, re.compile("https://api.sec.or.th/FundDailyInfo/.*/dailynav/.*"), status=204)
     result = sec_data.sec.get_nav_from_fund_id("FUND_ID", sec_data.nav_date)
     assert result is None
+
 
 def test_get_nav_from_fund_id_multi_class(sec_data):
     httpretty.reset()
@@ -259,6 +272,7 @@ def test_get_nav_from_fund_id_multi_class(sec_data):
 
     result = sec_data.sec.get_nav_from_fund_id(fund_name, sec_data.nav_date)
     assert result == expect_return
+
 
 #
 #   get
