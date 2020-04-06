@@ -589,6 +589,14 @@ version = "2.0.0"
 pytz = "*"
 
 [[package]]
+category = "dev"
+description = "Convert unittest test-cases to pytest"
+name = "unittest2pytest"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "0.4"
+
+[[package]]
 category = "main"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 name = "urllib3"
@@ -623,7 +631,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "69115fd513fe83ae122aa525415e3b04154810dbcee36d5e90d0bfbe7e918735"
+content-hash = "e6f5f8c5f0a2ed5100db342bcfabd62e91c0d179202b5ec9f97fa07a4914316f"
 python-versions = "^3.6.8"
 
 [metadata.files]
@@ -954,6 +962,10 @@ tornado = [
 tzlocal = [
     {file = "tzlocal-2.0.0-py2.py3-none-any.whl", hash = "sha256:11c9f16e0a633b4b60e1eede97d8a46340d042e67b670b290ca526576e039048"},
     {file = "tzlocal-2.0.0.tar.gz", hash = "sha256:949b9dd5ba4be17190a80c0268167d7e6c92c62b30026cf9764caf3e308e5590"},
+]
+unittest2pytest = [
+    {file = "unittest2pytest-0.4-py2.py3-none-any.whl", hash = "sha256:8f270c37fee3b57b3e2bb32db0a872d07ddb77c3b2ae62e1c922b1b497af9a2f"},
+    {file = "unittest2pytest-0.4.tar.gz", hash = "sha256:a909522aa54787e20c1cabda9624bf81edcfe5107dc3c73a478ad2d0cf67c21f"},
 ]
 urllib3 = [
     {file = "urllib3-1.25.8-py2.py3-none-any.whl", hash = "sha256:2f3db8b19923a873b3e5256dc9c2dedfa883e33d87c690d9c7913e1f40673cdc"},
