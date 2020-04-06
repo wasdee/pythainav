@@ -125,7 +125,7 @@ class Sec(Source):
             return response.json()
         # No content
         elif response.status_code == 204:
-            return []
+            return None
 
     def get(self, fund: str, date: str = None):
         if date:
@@ -189,7 +189,7 @@ class Sec(Source):
             return list_nav
         else:
             # Fund not found
-            return []
+            return None
 
     @lru_cache(maxsize=1024)
     def get_nav_from_fund_id(self, fund_id: str, nav_date: datetime.date):
@@ -241,7 +241,7 @@ class Sec(Source):
             return response.json()
         # No content
         elif response.status_code == 204:
-            return []
+            return None
 
     @lru_cache(maxsize=1024)
     def search_class_fund(self, name: str):
@@ -255,7 +255,7 @@ class Sec(Source):
             return response.json()
         # No content
         elif response.status_code == 204:
-            return []
+            return None
 
     def list_amc(self):
         url = self.base_url['fundfactsheet'].copy().add(path='amc').url
