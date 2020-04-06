@@ -1,5 +1,9 @@
 # Release Note
 
+## Pending
+### Add
+ - new data source Sec.or.th
+
 ## 0.1.5 - 9 March 2020
 
 ### Fixes
