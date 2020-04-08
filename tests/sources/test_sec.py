@@ -1,11 +1,11 @@
 import datetime
 import json
 import re
-import unittest
 
 from unittest.mock import patch
 
 import dateparser
+import pytest
 import requests
 
 import httpretty
@@ -13,273 +13,257 @@ import httpretty
 from pythainav.nav import Nav
 from pythainav.sources import Sec
 
-from .helpers.sec_data import setup_sec_data
+
+def test_no_subscription_key():
+    with pytest.raises(ValueError):
+        Sec()
 
 
-# TODO: Convert to pytest
-class SecSourceTest(unittest.TestCase):
-    @classmethod
-    def setUp(self):
-        setup_sec_data(self, httpretty)
+def test_subscription_key_is_none():
+    subscription_key = None
+    with pytest.raises(ValueError):
+        Sec(subscription_key)
 
-        self.subscription_key = {"fundfactsheet": "fact_key", "funddailyinfo": "daily_key"}
-        self.sec = Sec(subscription_key=self.subscription_key)
+    with pytest.raises(ValueError):
+        Sec(subscription_key=subscription_key)
 
-        self.nav_date = datetime.date(2020, 1, 1)
 
-    @classmethod
-    def tearDownClass(cls):
-        httpretty.disable()
-        httpretty.reset()
+def test_subscription_key_missing_key():
 
-    def test_no_subscription_key(self):
-        with self.assertRaises(ValueError):
-            Sec()
+    with pytest.raises(ValueError):
+        Sec(subscription_key={"wrong_name": "some_key"})
 
-    def test_subscription_key_is_none(self):
-        subscription_key = None
-        with self.assertRaises(ValueError):
-            Sec(subscription_key)
+    with pytest.raises(ValueError):
+        Sec(subscription_key={"fundfactsheet": "some_key"})
 
-        with self.assertRaises(ValueError):
-            Sec(subscription_key=subscription_key)
+    with pytest.raises(ValueError):
+        Sec(subscription_key={"funddailyinfo": "some_key"})
 
-    def test_subscription_key_missing_key(self):
+    test_sec = Sec(subscription_key={"fundfactsheet": "some_key", "funddailyinfo": "some_key"})
+    assert list(test_sec.subscription_key.keys()) == ["fundfactsheet", "funddailyinfo"]
 
-        with self.assertRaises(ValueError):
-            Sec(subscription_key={"wrong_name": "some_key"})
 
-        with self.assertRaises(ValueError):
-            Sec(subscription_key={"fundfactsheet": "some_key"})
+#
+#   search_fund
+#
+def test_search_fund_setting_headers(subscription_key):
+    source = Sec(subscription_key=subscription_key)
+    source.search_fund("FUND")
 
-        with self.assertRaises(ValueError):
-            Sec(subscription_key={"funddailyinfo": "some_key"})
+    # contain Ocp-Apim-Subscription-Key in header
+    assert "Ocp-Apim-Subscription-Key" in httpretty.last_request().headers
+    assert httpretty.last_request().headers["Ocp-Apim-Subscription-Key"] == subscription_key["fundfactsheet"]
 
-        test_sec = Sec(subscription_key={"fundfactsheet": "some_key", "funddailyinfo": "some_key"})
-        self.assertEqual(list(test_sec.subscription_key.keys()), ["fundfactsheet", "funddailyinfo"])
 
-    #
-    #   search_fund
-    #
-    def test_search_fund_setting_headers(self):
-        self.sec.search_fund("FUND")
-
-        # contain Ocp-Apim-Subscription-Key in header
-        self.assertTrue("Ocp-Apim-Subscription-Key" in httpretty.last_request().headers)
-        self.assertEqual(httpretty.last_request().headers["Ocp-Apim-Subscription-Key"], self.subscription_key["fundfactsheet"])
-
-    def test_search_fund_invalid_key(self):
-        httpretty.reset()
-        error_responses = [
-            httpretty.Response(
-                status=401,
-                body=json.dumps(
-                    {
-                        "statusCode": 401,
-                        "message": "Access denied due to invalid subscription key. Make sure to provide a valid key for an active subscription.",
-                    }
-                ),
-            )
-        ]
-
-        httpretty.register_uri(httpretty.POST, "https://api.sec.or.th/FundFactsheet/fund", responses=error_responses)
-        with self.assertRaises(requests.exceptions.HTTPError):
-            self.sec.search_fund("FUND")
-
-    def test_search_fund_success_with_content(self):
-        # status code 200
-        result = self.sec.search_fund("FUND")
-
-        self.assertEqual(result, self.search_fund_data)
-
-    def test_search_fund_no_content(self):
-        # status code 204
-        httpretty.reset()
-
-        httpretty.register_uri(httpretty.POST, "https://api.sec.or.th/FundFactsheet/fund", status=204)
-        result = self.sec.search_fund("FUND")
-        self.assertEqual(result, None)
-
-    #
-    #   search_class_fund
-    #
-    def test_search_class_fund_setting_headers(self):
-        self.sec.search_class_fund("FUND")
-
-        # contain Ocp-Apim-Subscription-Key in header
-        self.assertTrue("Ocp-Apim-Subscription-Key" in httpretty.last_request().headers)
-        self.assertEqual(httpretty.last_request().headers["Ocp-Apim-Subscription-Key"], self.subscription_key["fundfactsheet"])
-
-    def test_search_class_fund_invalid_key(self):
-        httpretty.reset()
-        error_responses = [
-            httpretty.Response(
-                status=401,
-                body=json.dumps(
-                    {
-                        "statusCode": 401,
-                        "message": "Access denied due to invalid subscription key. Make sure to provide a valid key for an active subscription.",
-                    }
-                ),
-            )
-        ]
-
-        httpretty.register_uri(
-            httpretty.POST, "https://api.sec.or.th/FundFactsheet/fund/class_fund", responses=error_responses
+def test_search_fund_invalid_key(subscription_key):
+    httpretty.reset()
+    error_responses = [
+        httpretty.Response(
+            status=401,
+            body=json.dumps(
+                {
+                    "statusCode": 401,
+                    "message": "Access denied due to invalid subscription key. Make sure to provide a valid key for an active subscription.",
+                }
+            ),
         )
-        with self.assertRaises(requests.exceptions.HTTPError):
-            self.sec.search_class_fund("FUND")
+    ]
 
-    def test_search_class_fund_success_with_content(self):
-        # status code 200
-        result = self.sec.search_class_fund("FUND")
+    httpretty.register_uri(httpretty.POST, "https://api.sec.or.th/FundFactsheet/fund", responses=error_responses)
+    source = Sec(subscription_key=subscription_key)
+    with pytest.raises(requests.exceptions.HTTPError):
+        source.search_fund("FUND")
 
-        self.assertEqual(result, self.search_class_fund_data)
 
-    def test_search_class_fund_no_content(self):
-        # status code 204
-        httpretty.reset()
+def test_search_fund_success_with_content(subscription_key, dataset):
+    source = Sec(subscription_key=subscription_key)
+    result = source.search_fund("FUND")
 
-        httpretty.register_uri(httpretty.POST, "https://api.sec.or.th/FundFactsheet/fund/class_fund", status=204)
-        result = self.sec.search_class_fund("FUND")
-        self.assertEqual(result, None)
+    assert result == dataset["search_fund_data"]
 
-    #
-    #   search
-    #
-    @patch("pythainav.sources.Sec.search_class_fund")
-    @patch("pythainav.sources.Sec.search_fund")
-    def test_search_result(self, mock_search_fund, mock_search_class_fund):
-        # search_fund found fund
-        mock_search_fund.return_value = self.search_fund_data
-        result = self.sec.search("FUND")
 
-        self.assertEqual(result, self.search_fund_data)
+def test_search_fund_no_content(subscription_key):
+    # status code 204
+    httpretty.reset()
 
-        # search_fund return empty
-        mock_search_fund.return_value = None
-        mock_search_class_fund.return_value = self.search_class_fund_data
-        result = self.sec.search("FUND")
-        self.assertTrue(mock_search_class_fund.called)
-        self.assertEqual(result, self.search_class_fund_data)
+    httpretty.register_uri(httpretty.POST, "https://api.sec.or.th/FundFactsheet/fund", status=204)
 
-        # both return empty
-        mock_search_fund.return_value = None
-        mock_search_class_fund.return_value = None
-        result = self.sec.search("FUND")
-        self.assertEqual(result, None)
+    source = Sec(subscription_key=subscription_key)
+    result = source.search_fund("FUND")
+    assert result is None
 
-    #
-    #   list
-    #
-    def test_list_result(self):
-        result = self.sec.list()
 
-        self.assertEqual(len(result), len(self.search_fund_data))
+#
+#   search_class_fund
+#
+def test_search_class_fund_setting_headers(subscription_key):
+    source = Sec(subscription_key=subscription_key)
+    source.search_class_fund("FUND")
 
-    #
-    #   get_nav_from_fund_id
-    #
-    def test_get_nav_from_fund_id_setting_headers(self):
-        self.sec.get_nav_from_fund_id("FUND_ID", self.nav_date)
+    # contain Ocp-Apim-Subscription-Key in header
+    assert "Ocp-Apim-Subscription-Key" in httpretty.last_request().headers
+    assert httpretty.last_request().headers["Ocp-Apim-Subscription-Key"] == subscription_key["fundfactsheet"]
 
-        # contain Ocp-Apim-Subscription-Key in header
-        self.assertTrue("Ocp-Apim-Subscription-Key" in httpretty.last_request().headers)
-        self.assertEqual(httpretty.last_request().headers["Ocp-Apim-Subscription-Key"], self.subscription_key["funddailyinfo"])
 
-    def test_get_nav_from_fund_id_invalid_key(self):
-        httpretty.reset()
-        error_responses = [
-            httpretty.Response(
-                status=401,
-                body=json.dumps(
-                    {
-                        "statusCode": 401,
-                        "message": "Access denied due to invalid subscription key. Make sure to provide a valid key for an active subscription.",
-                    }
-                ),
-            )
-        ]
-
-        httpretty.register_uri(
-            httpretty.GET, re.compile("https://api.sec.or.th/FundDailyInfo/.*/dailynav/.*"), responses=error_responses
+def test_search_class_fund_invalid_key(subscription_key):
+    httpretty.reset()
+    error_responses = [
+        httpretty.Response(
+            status=401,
+            body=json.dumps(
+                {
+                    "statusCode": 401,
+                    "message": "Access denied due to invalid subscription key. Make sure to provide a valid key for an active subscription.",
+                }
+            ),
         )
-        with self.assertRaises(requests.exceptions.HTTPError):
-            self.sec.get_nav_from_fund_id("FUND_ID", self.nav_date)
+    ]
 
-    def test_get_nav_from_fund_id_success_with_content(self):
-        # status code 200
-        expect_return = Nav(
-            value=float(self.dailynav_data["last_val"]),
-            updated=dateparser.parse(self.dailynav_data["nav_date"]),
+    httpretty.register_uri(httpretty.POST, "https://api.sec.or.th/FundFactsheet/fund/class_fund", responses=error_responses)
+    source = Sec(subscription_key=subscription_key)
+    with pytest.raises(requests.exceptions.HTTPError):
+        source.search_class_fund("FUND")
+
+
+def test_search_class_fund_success_with_content(subscription_key, dataset):
+    source = Sec(subscription_key=subscription_key)
+    result = source.search_class_fund("FUND")
+
+    assert result == dataset["search_class_fund_data"]
+
+
+def test_search_class_fund_no_content(subscription_key):
+    # status code 204
+    httpretty.reset()
+
+    httpretty.register_uri(httpretty.POST, "https://api.sec.or.th/FundFactsheet/fund/class_fund", status=204)
+
+    source = Sec(subscription_key=subscription_key)
+    result = source.search_class_fund("FUND")
+    assert result is None
+
+
+#
+#   search
+#
+@patch("pythainav.sources.Sec.search_class_fund")
+@patch("pythainav.sources.Sec.search_fund")
+def test_search_result(mock_search_fund, mock_search_class_fund, subscription_key, dataset):
+    # search_fund found fund
+    mock_search_fund.return_value = dataset["search_fund_data"]
+    source = Sec(subscription_key=subscription_key)
+    result = source.search("FUND")
+
+    assert result == dataset["search_fund_data"]
+
+    # search_fund return empty
+    mock_search_fund.return_value = None
+    mock_search_class_fund.return_value = dataset["search_class_fund_data"]
+    result = source.search("FUND")
+    assert mock_search_class_fund.called
+    assert result == dataset["search_class_fund_data"]
+
+    # both return empty
+    mock_search_fund.return_value = None
+    mock_search_class_fund.return_value = None
+    result = source.search("FUND")
+    assert result is None
+
+
+#
+#   list
+#
+def test_list_result(subscription_key, dataset):
+    source = Sec(subscription_key=subscription_key)
+    result = source.list()
+
+    assert len(result) == len(dataset["search_fund_data"])
+
+
+#
+#   get_nav_from_fund_id
+#
+def test_get_nav_from_fund_id_success_with_content(subscription_key, dataset):
+    # status code 200
+    expect_return = Nav(
+        value=float(dataset["dailynav_data"]["last_val"]),
+        updated=dateparser.parse(dataset["dailynav_data"]["nav_date"]),
+        tags={},
+        fund="FUND_ID",
+    )
+
+    nav_date = datetime.date(2020, 1, 1)
+    source = Sec(subscription_key=subscription_key)
+    result = source.get_nav_from_fund_id("FUND_ID", nav_date)
+
+    assert result == expect_return
+
+
+def test_get_nav_from_fund_id_no_content(subscription_key):
+    # status code 204
+    httpretty.reset()
+
+    httpretty.register_uri(httpretty.GET, re.compile("https://api.sec.or.th/FundDailyInfo/.*/dailynav/.*"), status=204)
+    nav_date = datetime.date(2020, 1, 1)
+    source = Sec(subscription_key=subscription_key)
+    result = source.get_nav_from_fund_id("FUND_ID", nav_date)
+    assert result is None
+
+
+def test_get_nav_from_fund_id_multi_class(subscription_key, dataset):
+    httpretty.reset()
+
+    httpretty.register_uri(
+        httpretty.GET,
+        re.compile("https://api.sec.or.th/FundDailyInfo/.*/dailynav/.*"),
+        body=json.dumps(dataset["multi_class_dailynav_data"]),
+    )
+
+    fund_name = "FUND_ID"
+    remark_en = dataset["multi_class_dailynav_data"]["amc_info"][0]["remark_en"]
+    multi_class_nav = {k.strip(): float(v) for x in remark_en.split("/") for k, v in [x.split("=")]}
+    expect_return = []
+    for fund_name, nav_val in multi_class_nav.items():
+        n = Nav(
+            value=float(nav_val),
+            updated=dateparser.parse(dataset["multi_class_dailynav_data"]["nav_date"]),
             tags={},
-            fund="FUND_ID",
+            fund=fund_name,
         )
+        n.amount = dataset["multi_class_dailynav_data"]["net_asset"]
+        expect_return.append(n)
 
-        result = self.sec.get_nav_from_fund_id("FUND_ID", self.nav_date)
+    nav_date = datetime.date(2020, 1, 1)
+    source = Sec(subscription_key=subscription_key)
+    result = source.get_nav_from_fund_id(fund_name, nav_date)
+    assert result == expect_return
 
-        self.assertEqual(result, expect_return)
 
-    def test_get_nav_from_fund_id_no_content(self):
-        # status code 204
-        httpretty.reset()
+#
+#   get
+#
+def test_get_params(subscription_key):
+    nav_date = datetime.date(2020, 1, 1)
+    source = Sec(subscription_key=subscription_key)
 
-        httpretty.register_uri(httpretty.GET, re.compile("https://api.sec.or.th/FundDailyInfo/.*/dailynav/.*"), status=204)
-        result = self.sec.get_nav_from_fund_id("FUND_ID", self.nav_date)
-        self.assertEqual(result, None)
+    # date: str
+    try:
+        source.get("FUND", nav_date.isoformat())
+    except Exception:
+        pytest.fail("raise exception unexpectedly")
 
-    def test_get_nav_from_fund_id_multi_class(self):
-        httpretty.reset()
+    # Empty Fund
+    with pytest.raises(ValueError):
+        source.get("", nav_date.isoformat())
 
-        httpretty.register_uri(
-            httpretty.GET,
-            re.compile("https://api.sec.or.th/FundDailyInfo/.*/dailynav/.*"),
-            body=json.dumps(self.multi_class_dailynav_data),
-        )
+    # date: datetime.date
+    try:
+        source.get("FUND", nav_date)
+    except Exception:
+        pytest.fail("raise exception unexpectedly")
 
-        fund_name = "FUND_ID"
-        remark_en = self.multi_class_dailynav_data["amc_info"][0]["remark_en"]
-        multi_class_nav = {k.strip(): float(v) for x in remark_en.split("/") for k, v in [x.split("=")]}
-        expect_return = []
-        for fund_name, nav_val in multi_class_nav.items():
-            n = Nav(
-                value=float(nav_val),
-                updated=dateparser.parse(self.multi_class_dailynav_data["nav_date"]),
-                tags={},
-                fund=fund_name,
-            )
-            n.amount = self.multi_class_dailynav_data["net_asset"]
-            expect_return.append(n)
-
-        result = self.sec.get_nav_from_fund_id(fund_name, self.nav_date)
-        self.assertEqual(result, expect_return)
-
-    #
-    #   get
-    #
-    def test_get_params(self):
-        # date: str
-        try:
-            self.sec.get("FUND", self.nav_date.isoformat())
-        except Exception:
-            self.fail("raise exception unexpectedly")
-
-        # Empty Fund
-        with self.assertRaises(ValueError):
-            self.sec.get("", self.nav_date.isoformat())
-
-        # date: datetime.date
-        try:
-            self.sec.get("FUND", self.nav_date)
-        except Exception:
-            self.fail("raise exception unexpectedly")
-
-        # date: datetime.datetime
-        try:
-            self.sec.get("FUND", datetime.datetime.combine(self.nav_date, datetime.datetime.min.time()))
-        except Exception:
-            self.fail("raise exception unexpectedly")
-
-    #
-    #   get_range
-    #
+    # date: datetime.datetime
+    try:
+        source.get("FUND", datetime.datetime.combine(nav_date, datetime.datetime.min.time()))
+    except Exception:
+        pytest.fail("raise exception unexpectedly")
