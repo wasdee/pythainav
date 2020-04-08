@@ -124,6 +124,8 @@ class Sec(Source):
         # check status code
         response.raise_for_status()
         if response.status_code == 200:
+            if response.headers["content-length"] == "0":
+                raise requests.exceptions.ConnectionError("No data received")
             return response.json()
         # No content
         elif response.status_code == 204:
@@ -202,6 +204,8 @@ class Sec(Source):
         # check status code
         response.raise_for_status()
         if response.status_code == 200:
+            if response.headers["content-length"] == "0":
+                raise requests.exceptions.ConnectionError("No data received")
             result = response.json()
             # Multi class fund
             if float(result["last_val"]) == 0.0 and float(result["previous_val"]) == 0:
@@ -240,6 +244,8 @@ class Sec(Source):
         # check status code
         response.raise_for_status()
         if response.status_code == 200:
+            if response.headers["content-length"] == "0":
+                raise requests.exceptions.ConnectionError("No data received")
             return response.json()
         # No content
         elif response.status_code == 204:
@@ -254,6 +260,8 @@ class Sec(Source):
         # check status code
         response.raise_for_status()
         if response.status_code == 200:
+            if response.headers["content-length"] == "0":
+                raise requests.exceptions.ConnectionError("No data received")
             return response.json()
         # No content
         elif response.status_code == 204:
