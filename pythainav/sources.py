@@ -425,8 +425,6 @@ class Sec(Source):
         for record in result:
             if "dividend_details" in record:
                 for dividend_record in record["dividend_details"]:
-                    print(dividend_record)
-                    print(type(dividend_record["book_closing_date"]))
                     if dividend_record["book_closing_date"] != "-":
                         dividend_record["book_closing_date"] = (
                             convert_buddhist_to_gregorian(dividend_record["book_closing_date"]).date().isoformat()
