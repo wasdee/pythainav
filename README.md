@@ -1,7 +1,8 @@
 # PythaiNAV: ทำให้การดึงข้อมูลกองทุนไทยเป็นเรื่องง่าย
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FCircleOnCircles%2Fpythainav.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FCircleOnCircles%2Fpythainav?ref=badge_shield)
 ![Tests](https://github.com/CircleOnCircles/pythainav/workflows/Tests/badge.svg?branch=master)
 [![codecov](https://codecov.io/gh/CircleOnCircles/pythainav/branch/develop/graph/badge.svg)](https://codecov.io/gh/CircleOnCircles/pythainav)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f868488db4ba4266a112c3432301c6b4)](https://www.codacy.com/manual/nutchanon/pythainav?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CircleOnCircles/pythainav&amp;utm_campaign=Badge_Grade)
@@ -67,8 +68,6 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 
-## Related and Alternative
 
-ตัวที่ใช้ได้ในปัจจุบัน 22/02/20
-* [uncleEngineer](https://github.com/UncleEngineer/uncleengineer) - ดึงข้อมูลหุ้น ณ ปัจจุบัน
-* [pandas-datareader](https://www.patanasongsivilai.com/blog/stock-thai-python/) - ดึงข้อมูลหุ้นย้อนหลังผ่าน `pdr.get_data_yahoo`
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FCircleOnCircles%2Fpythainav.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FCircleOnCircles%2Fpythainav?ref=badge_large)
