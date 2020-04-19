@@ -23,7 +23,9 @@ def setup_sec_data(unit_test, httpretty):
 
     # FundFactsheet 3
     httpretty.register_uri(
-        httpretty.POST, "https://api.sec.or.th/FundFactsheet/fund", body=json.dumps(unit_test.search_fund_data)
+        httpretty.POST,
+        "https://api.sec.or.th/FundFactsheet/fund",
+        body=json.dumps(unit_test.search_fund_data),
     )
 
     # FundFactsheet 21

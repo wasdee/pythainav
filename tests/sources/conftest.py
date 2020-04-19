@@ -46,7 +46,9 @@ def set_global_test_data(request):
     #
     # FundFactsheet 3
     httpretty.register_uri(
-        httpretty.POST, "https://api.sec.or.th/FundFactsheet/fund", body=json.dumps(dataset["search_fund_data"])
+        httpretty.POST,
+        "https://api.sec.or.th/FundFactsheet/fund",
+        body=json.dumps(dataset["search_fund_data"]),
     )
 
     # FundFactsheet 21
@@ -72,7 +74,11 @@ def set_global_test_data(request):
         )
     }
     # FundFactsheet 3
-    httpretty.register_uri(httpretty.POST, base_url["fundfactsheet"].url, body=json.dumps(dataset["search_fund_data"]))
+    httpretty.register_uri(
+        httpretty.POST,
+        base_url["fundfactsheet"].url,
+        body=json.dumps(dataset["search_fund_data"]),
+    )
 
     # FundFactsheet 21
     httpretty.register_uri(

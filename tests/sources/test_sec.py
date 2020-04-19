@@ -39,7 +39,9 @@ def test_subscription_key_missing_key():
     with pytest.raises(ValueError):
         Sec(subscription_key={"funddailyinfo": "some_key"})
 
-    test_sec = Sec(subscription_key={"fundfactsheet": "some_key", "funddailyinfo": "some_key"})
+    test_sec = Sec(
+        subscription_key={"fundfactsheet": "some_key", "funddailyinfo": "some_key"}
+    )
     assert list(test_sec.subscription_key.keys()) == ["fundfactsheet", "funddailyinfo"]
 
 
@@ -52,7 +54,10 @@ def test_search_fund_setting_headers(subscription_key):
 
     # contain Ocp-Apim-Subscription-Key in header
     assert "Ocp-Apim-Subscription-Key" in httpretty.last_request().headers
-    assert httpretty.last_request().headers["Ocp-Apim-Subscription-Key"] == subscription_key["fundfactsheet"]
+    assert (
+        httpretty.last_request().headers["Ocp-Apim-Subscription-Key"]
+        == subscription_key["fundfactsheet"]
+    )
 
 
 def test_search_fund_invalid_key(subscription_key):
@@ -69,7 +74,11 @@ def test_search_fund_invalid_key(subscription_key):
         )
     ]
 
-    httpretty.register_uri(httpretty.POST, "https://api.sec.or.th/FundFactsheet/fund", responses=error_responses)
+    httpretty.register_uri(
+        httpretty.POST,
+        "https://api.sec.or.th/FundFactsheet/fund",
+        responses=error_responses,
+    )
     source = Sec(subscription_key=subscription_key)
     with pytest.raises(requests.exceptions.HTTPError):
         source.search_fund("FUND")
@@ -86,7 +95,9 @@ def test_search_fund_no_content(subscription_key):
     # status code 204
     httpretty.reset()
 
-    httpretty.register_uri(httpretty.POST, "https://api.sec.or.th/FundFactsheet/fund", status=204)
+    httpretty.register_uri(
+        httpretty.POST, "https://api.sec.or.th/FundFactsheet/fund", status=204
+    )
 
     source = Sec(subscription_key=subscription_key)
     result = source.search_fund("FUND")
@@ -102,7 +113,10 @@ def test_search_class_fund_setting_headers(subscription_key):
 
     # contain Ocp-Apim-Subscription-Key in header
     assert "Ocp-Apim-Subscription-Key" in httpretty.last_request().headers
-    assert httpretty.last_request().headers["Ocp-Apim-Subscription-Key"] == subscription_key["fundfactsheet"]
+    assert (
+        httpretty.last_request().headers["Ocp-Apim-Subscription-Key"]
+        == subscription_key["fundfactsheet"]
+    )
 
 
 def test_search_class_fund_invalid_key(subscription_key):
@@ -119,7 +133,11 @@ def test_search_class_fund_invalid_key(subscription_key):
         )
     ]
 
-    httpretty.register_uri(httpretty.POST, "https://api.sec.or.th/FundFactsheet/fund/class_fund", responses=error_responses)
+    httpretty.register_uri(
+        httpretty.POST,
+        "https://api.sec.or.th/FundFactsheet/fund/class_fund",
+        responses=error_responses,
+    )
     source = Sec(subscription_key=subscription_key)
     with pytest.raises(requests.exceptions.HTTPError):
         source.search_class_fund("FUND")
@@ -136,7 +154,11 @@ def test_search_class_fund_no_content(subscription_key):
     # status code 204
     httpretty.reset()
 
-    httpretty.register_uri(httpretty.POST, "https://api.sec.or.th/FundFactsheet/fund/class_fund", status=204)
+    httpretty.register_uri(
+        httpretty.POST,
+        "https://api.sec.or.th/FundFactsheet/fund/class_fund",
+        status=204,
+    )
 
     source = Sec(subscription_key=subscription_key)
     result = source.search_class_fund("FUND")
@@ -148,7 +170,9 @@ def test_search_class_fund_no_content(subscription_key):
 #
 @patch("pythainav.sources.Sec.search_class_fund")
 @patch("pythainav.sources.Sec.search_fund")
-def test_search_result(mock_search_fund, mock_search_class_fund, subscription_key, dataset):
+def test_search_result(
+    mock_search_fund, mock_search_class_fund, subscription_key, dataset
+):
     # search_fund found fund
     mock_search_fund.return_value = dataset["search_fund_data"]
     source = Sec(subscription_key=subscription_key)
@@ -203,7 +227,11 @@ def test_get_nav_from_fund_id_no_content(subscription_key):
     # status code 204
     httpretty.reset()
 
-    httpretty.register_uri(httpretty.GET, re.compile("https://api.sec.or.th/FundDailyInfo/.*/dailynav/.*"), status=204)
+    httpretty.register_uri(
+        httpretty.GET,
+        re.compile("https://api.sec.or.th/FundDailyInfo/.*/dailynav/.*"),
+        status=204,
+    )
     nav_date = datetime.date(2020, 1, 1)
     source = Sec(subscription_key=subscription_key)
     result = source.get_nav_from_fund_id("FUND_ID", nav_date)
@@ -221,7 +249,9 @@ def test_get_nav_from_fund_id_multi_class(subscription_key, dataset):
 
     fund_name = "FUND_ID"
     remark_en = dataset["multi_class_dailynav_data"]["amc_info"][0]["remark_en"]
-    multi_class_nav = {k.strip(): float(v) for x in remark_en.split("/") for k, v in [x.split("=")]}
+    multi_class_nav = {
+        k.strip(): float(v) for x in remark_en.split("/") for k, v in [x.split("=")]
+    }
     expect_return = []
     for fund_name, nav_val in multi_class_nav.items():
         n = Nav(
@@ -264,6 +294,8 @@ def test_get_params(subscription_key):
 
     # date: datetime.datetime
     try:
-        source.get("FUND", datetime.datetime.combine(nav_date, datetime.datetime.min.time()))
+        source.get(
+            "FUND", datetime.datetime.combine(nav_date, datetime.datetime.min.time())
+        )
     except Exception:
         pytest.fail("raise exception unexpectedly")

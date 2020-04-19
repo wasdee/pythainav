@@ -32,13 +32,18 @@ def test_get_all_pandas():
 def test_sec_source():
     from decouple import config
 
-    subs_key = {"fundfactsheet": config("FUND_FACTSHEET_KEY"), "funddailyinfo": config("FUND_DAILY_INFO_KEY")}
+    subs_key = {
+        "fundfactsheet": config("FUND_FACTSHEET_KEY"),
+        "funddailyinfo": config("FUND_DAILY_INFO_KEY"),
+    }
 
     # should auto convert to friday if it is a weekend
     # kt_nav = nav.get("KT-PRECIOUS", source="sec", subscription_key=subs_key)
     # print(kt_nav)
     # assert kt_nav.value >= 0
 
-    kt_nav = nav.get("KT-PRECIOUS", source="sec", subscription_key=subs_key, date="03/04/2020")
+    kt_nav = nav.get(
+        "KT-PRECIOUS", source="sec", subscription_key=subs_key, date="03/04/2020"
+    )
     print(kt_nav)
     assert kt_nav.value >= 0

@@ -56,7 +56,12 @@ class Finnomena(Source):
         url = url.url
 
         nav = requests.get(url).json()
-        nav = Nav(value=float(nav["value"]), updated=dateparser.parse(nav["nav_date"]), tags={"latest"}, fund=fund)
+        nav = Nav(
+            value=float(nav["value"]),
+            updated=dateparser.parse(nav["nav_date"]),
+            tags={"latest"},
+            fund=fund,
+        )
         return nav
 
     # cache here should be sensible since the fund is not regulary update
@@ -76,7 +81,12 @@ class Finnomena(Source):
 
         navs = []
         for nav_resp in navs_response:
-            nav = Nav(value=float(nav_resp["value"]), updated=dateparser.parse(nav_resp["nav_date"]), tags={}, fund=fund)
+            nav = Nav(
+                value=float(nav_resp["value"]),
+                updated=dateparser.parse(nav_resp["nav_date"]),
+                tags={},
+                fund=fund,
+            )
             nav.amount = nav_resp["amount"]
             navs.append(nav)
 
@@ -102,8 +112,15 @@ class Sec(Source):
         if subscription_key is None:
             # TODO: Create specific exception for this
             raise ValueError("Missing subscription key")
-        if not all([True if key in subscription_key else False for key in ["fundfactsheet", "funddailyinfo"]]):
-            raise ValueError("subscription_key must contain 'fundfactsheet' and 'funddailyinfo' key")
+        if not all(
+            [
+                True if key in subscription_key else False
+                for key in ["fundfactsheet", "funddailyinfo"]
+            ]
+        ):
+            raise ValueError(
+                "subscription_key must contain 'fundfactsheet' and 'funddailyinfo' key"
+            )
         self.subscription_key = subscription_key
         self.headers = {
             "Content-Type": "application/json",
@@ -118,7 +135,9 @@ class Sec(Source):
     def __get_api_data(self, url, headers=None, subscription_key="fundfactsheet"):
         if headers is None:
             headers = self.headers
-        headers.update({"Ocp-Apim-Subscription-Key": self.subscription_key[subscription_key]})
+        headers.update(
+            {"Ocp-Apim-Subscription-Key": self.subscription_key[subscription_key]}
+        )
         response = self.session.get(url, headers=headers)
         # check status code
         response.raise_for_status()
@@ -144,7 +163,9 @@ class Sec(Source):
             query_date = last_bus_day = datetime.date.today()
             wk_day = datetime.date.weekday(last_bus_day)
             if wk_day > 4:  # if it's Saturday or Sunday
-                last_bus_day = last_bus_day - datetime.timedelta(days=wk_day - 4)  # then make it Friday
+                last_bus_day = last_bus_day - datetime.timedelta(
+                    days=wk_day - 4
+                )  # then make it Friday
             query_date = last_bus_day
 
         if not fund:
@@ -196,9 +217,16 @@ class Sec(Source):
 
     @lru_cache(maxsize=1024)
     def get_nav_from_fund_id(self, fund_id: str, nav_date: datetime.date):
-        url = self.base_url["funddailyinfo"].copy().add(path=[fund_id, "dailynav", nav_date.isoformat()]).url
+        url = (
+            self.base_url["funddailyinfo"]
+            .copy()
+            .add(path=[fund_id, "dailynav", nav_date.isoformat()])
+            .url
+        )
         headers = self.headers
-        headers.update({"Ocp-Apim-Subscription-Key": self.subscription_key["funddailyinfo"]})
+        headers.update(
+            {"Ocp-Apim-Subscription-Key": self.subscription_key["funddailyinfo"]}
+        )
         response = self.session.get(url, headers=headers)
         # check status code
         response.raise_for_status()
@@ -209,15 +237,29 @@ class Sec(Source):
             # Multi class fund
             if float(result["last_val"]) == 0.0 and float(result["previous_val"]) == 0:
                 remark_en = result["amc_info"][0]["remark_en"]
-                multi_class_nav = {k.strip(): float(v) for x in remark_en.split("/") for k, v in [x.split("=")]}
+                multi_class_nav = {
+                    k.strip(): float(v)
+                    for x in remark_en.split("/")
+                    for k, v in [x.split("=")]
+                }
                 list_nav = []
                 for fund_name, nav_val in multi_class_nav.items():
-                    n = Nav(value=float(nav_val), updated=dateparser.parse(result["nav_date"]), tags={}, fund=fund_name)
+                    n = Nav(
+                        value=float(nav_val),
+                        updated=dateparser.parse(result["nav_date"]),
+                        tags={},
+                        fund=fund_name,
+                    )
                     n.amount = result["net_asset"]
                     list_nav.append(n)
                 return list_nav
             else:
-                n = Nav(value=float(result["last_val"]), updated=dateparser.parse(result["nav_date"]), tags={}, fund=fund_id)
+                n = Nav(
+                    value=float(result["last_val"]),
+                    updated=dateparser.parse(result["nav_date"]),
+                    tags={},
+                    fund=fund_id,
+                )
                 n.amount = result["net_asset"]
                 return n
         # No content
@@ -238,7 +280,9 @@ class Sec(Source):
     def search_fund(self, name: str):
         url = self.base_url["fundfactsheet"].url
         headers = self.headers
-        headers.update({"Ocp-Apim-Subscription-Key": self.subscription_key["fundfactsheet"]})
+        headers.update(
+            {"Ocp-Apim-Subscription-Key": self.subscription_key["fundfactsheet"]}
+        )
         response = self.session.post(url, headers=headers, json={"name": name})
         # check status code
         response.raise_for_status()
@@ -254,7 +298,9 @@ class Sec(Source):
     def search_class_fund(self, name: str):
         url = self.base_url["fundfactsheet"].copy().add(path="class_fund").url
         headers = self.headers
-        headers.update({"Ocp-Apim-Subscription-Key": self.subscription_key["fundfactsheet"]})
+        headers.update(
+            {"Ocp-Apim-Subscription-Key": self.subscription_key["fundfactsheet"]}
+        )
         response = self.session.post(url, headers=headers, json={"name": name})
         # check status code
         response.raise_for_status()
@@ -295,14 +341,21 @@ class Sec(Source):
     def get_fund_investment(self, fund_id):
         if not fund_id:
             raise ValueError("Must specify fund")
-        url = self.base_url["fundfactsheet"].copy().add(path=[fund_id, "investment"]).url
+        url = (
+            self.base_url["fundfactsheet"].copy().add(path=[fund_id, "investment"]).url
+        )
         result = self.__get_api_data(url)
         return result
 
     def get_fund_project_type(self, fund_id):
         if not fund_id:
             raise ValueError("Must specify fund")
-        url = self.base_url["fundfactsheet"].copy().add(path=[fund_id, "project_type"]).url
+        url = (
+            self.base_url["fundfactsheet"]
+            .copy()
+            .add(path=[fund_id, "project_type"])
+            .url
+        )
         result = self.__get_api_data(url)
         return result
 
@@ -312,36 +365,54 @@ class Sec(Source):
         url = self.base_url["fundfactsheet"].copy().add(path=[fund_id, "policy"]).url
         result = self.__get_api_data(url)
         if "investment_policy_desc" in result and len(result["investment_policy_desc"]):
-            result["investment_policy_desc"] = base64.b64decode(result["investment_policy_desc"]).decode("utf-8")
+            result["investment_policy_desc"] = base64.b64decode(
+                result["investment_policy_desc"]
+            ).decode("utf-8")
         return result
 
     def get_fund_specification(self, fund_id):
         if not fund_id:
             raise ValueError("Must specify fund")
-        url = self.base_url["fundfactsheet"].copy().add(path=[fund_id, "specification"]).url
+        url = (
+            self.base_url["fundfactsheet"]
+            .copy()
+            .add(path=[fund_id, "specification"])
+            .url
+        )
         result = self.__get_api_data(url)
         return result
 
     def get_fund_feeder_fund(self, fund_id):
         if not fund_id:
             raise ValueError("Must specify fund")
-        url = self.base_url["fundfactsheet"].copy().add(path=[fund_id, "feeder_fund"]).url
+        url = (
+            self.base_url["fundfactsheet"].copy().add(path=[fund_id, "feeder_fund"]).url
+        )
         result = self.__get_api_data(url)
         return result
 
     def get_fund_redemption(self, fund_id):
         if not fund_id:
             raise ValueError("Must specify fund")
-        url = self.base_url["fundfactsheet"].copy().add(path=[fund_id, "redemption"]).url
+        url = (
+            self.base_url["fundfactsheet"].copy().add(path=[fund_id, "redemption"]).url
+        )
         result = self.__get_api_data(url)
         return result
 
     def get_fund_suitability(self, fund_id):
         if not fund_id:
             raise ValueError("Must specify fund")
-        url = self.base_url["fundfactsheet"].copy().add(path=[fund_id, "suitability"]).url
+        url = (
+            self.base_url["fundfactsheet"].copy().add(path=[fund_id, "suitability"]).url
+        )
         result = self.__get_api_data(url)
-        for key in ["fund_suitable_desc", "fund_not_suitable_desc", "important_notice", "risk_spectrum_desc"]:
+        for key in [
+            "fund_suitable_desc",
+            "fund_not_suitable_desc",
+            "important_notice",
+            "risk_spectrum_desc",
+        ]:
             if key in result:
                 result[key] = base64.b64decode(result[key]).decode("utf-8")
         return result
@@ -363,7 +434,12 @@ class Sec(Source):
     def get_fund_turnover_ratio(self, fund_id):
         if not fund_id:
             raise ValueError("Must specify fund")
-        url = self.base_url["fundfactsheet"].copy().add(path=[fund_id, "turnover_ratio"]).url
+        url = (
+            self.base_url["fundfactsheet"]
+            .copy()
+            .add(path=[fund_id, "turnover_ratio"])
+            .url
+        )
         result = self.__get_api_data(url)
         return result
 
@@ -377,7 +453,12 @@ class Sec(Source):
     def get_fund_buy_and_hold(self, fund_id):
         if not fund_id:
             raise ValueError("Must specify fund")
-        url = self.base_url["fundfactsheet"].copy().add(path=[fund_id, "buy_and_hold"]).url
+        url = (
+            self.base_url["fundfactsheet"]
+            .copy()
+            .add(path=[fund_id, "buy_and_hold"])
+            .url
+        )
         result = self.__get_api_data(url)
         return result
 
@@ -391,21 +472,30 @@ class Sec(Source):
     def get_fund_compare(self, fund_id):
         if not fund_id:
             raise ValueError("Must specify fund")
-        url = self.base_url["fundfactsheet"].copy().add(path=[fund_id, "fund_compare"]).url
+        url = (
+            self.base_url["fundfactsheet"]
+            .copy()
+            .add(path=[fund_id, "fund_compare"])
+            .url
+        )
         result = self.__get_api_data(url)
         return result
 
     def get_class_fund(self, fund_id):
         if not fund_id:
             raise ValueError("Must specify fund")
-        url = self.base_url["fundfactsheet"].copy().add(path=[fund_id, "class_fund"]).url
+        url = (
+            self.base_url["fundfactsheet"].copy().add(path=[fund_id, "class_fund"]).url
+        )
         result = self.__get_api_data(url)
         return result
 
     def get_fund_performance(self, fund_id):
         if not fund_id:
             raise ValueError("Must specify fund")
-        url = self.base_url["fundfactsheet"].copy().add(path=[fund_id, "performance"]).url
+        url = (
+            self.base_url["fundfactsheet"].copy().add(path=[fund_id, "performance"]).url
+        )
         result = self.__get_api_data(url)
         return result
 
@@ -426,11 +516,19 @@ class Sec(Source):
                 for dividend_record in record["dividend_details"]:
                     if dividend_record["book_closing_date"] != "-":
                         dividend_record["book_closing_date"] = (
-                            convert_buddhist_to_gregorian(dividend_record["book_closing_date"]).date().isoformat()
+                            convert_buddhist_to_gregorian(
+                                dividend_record["book_closing_date"]
+                            )
+                            .date()
+                            .isoformat()
                         )
                     if dividend_record["payment_date"] != "-":
                         dividend_record["payment_date"] = (
-                            convert_buddhist_to_gregorian(dividend_record["payment_date"]).date().isoformat()
+                            convert_buddhist_to_gregorian(
+                                dividend_record["payment_date"]
+                            )
+                            .date()
+                            .isoformat()
                         )
         return result
 
@@ -444,31 +542,55 @@ class Sec(Source):
     def get_fund_involveparty(self, fund_id):
         if not fund_id:
             raise ValueError("Must specify fund")
-        url = self.base_url["fundfactsheet"].copy().add(path=[fund_id, "InvolveParty"]).url
+        url = (
+            self.base_url["fundfactsheet"]
+            .copy()
+            .add(path=[fund_id, "InvolveParty"])
+            .url
+        )
         result = self.__get_api_data(url)
         for record in result:
             if "effective_date" in record and record["effective_date"] != "-":
-                record["effective_date"] = convert_buddhist_to_gregorian(record["effective_date"]).date().isoformat()
+                record["effective_date"] = (
+                    convert_buddhist_to_gregorian(record["effective_date"])
+                    .date()
+                    .isoformat()
+                )
         return result
 
     def get_fund_port(self, fund_id, period):
         if not fund_id:
             raise ValueError("Must specify fund")
-        url = self.base_url["fundfactsheet"].copy().add(path=[fund_id, "FundPort", period]).url
+        url = (
+            self.base_url["fundfactsheet"]
+            .copy()
+            .add(path=[fund_id, "FundPort", period])
+            .url
+        )
         result = self.__get_api_data(url)
         return result
 
     def get_fund_full_port(self, fund_id, period):
         if not fund_id:
             raise ValueError("Must specify fund")
-        url = self.base_url["fundfactsheet"].copy().add(path=[fund_id, "FundPort", period]).url
+        url = (
+            self.base_url["fundfactsheet"]
+            .copy()
+            .add(path=[fund_id, "FundPort", period])
+            .url
+        )
         result = self.__get_api_data(url)
         return result
 
     def get_fund_top5_port(self, fund_id, period):
         if not fund_id:
             raise ValueError("Must specify fund")
-        url = self.base_url["fundfactsheet"].copy().add(path=[fund_id, "FundTop5", period]).url
+        url = (
+            self.base_url["fundfactsheet"]
+            .copy()
+            .add(path=[fund_id, "FundTop5", period])
+            .url
+        )
         result = self.__get_api_data(url)
         return result
 
