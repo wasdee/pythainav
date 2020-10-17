@@ -1,11 +1,11 @@
 # Borrow from
 # https://github.com/pandas-dev/pandas/blob/774498b667e82bf6e826da44135a3ef99590ead6/pandas/compat/_optional.py
 
+import types
+
 import distutils.version
 import importlib
-import types
 import warnings
-
 
 VERSIONS = {"pandas": "0.25.3"}
 
@@ -22,7 +22,10 @@ def _get_version(module: types.ModuleType) -> str:
 
 
 def import_optional_dependency(
-    name: str, extra: str = "", raise_on_missing: bool = True, on_version: str = "raise"
+    name: str,
+    extra: str = "",
+    raise_on_missing: bool = True,
+    on_version: str = "raise",
 ):
     """
     Import an optional dependency.
