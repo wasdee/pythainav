@@ -1,8 +1,7 @@
 # linting:
 #     pre-commit run --all-files
 
-# publish:
-#     poetry publish --build
+
 
 # serve/docs:
 #     mkdocs serve
@@ -162,3 +161,7 @@ clean:
 
 .PHONY: clean
 clean: clean_build clean_docker
+
+.PHONY: publish
+publish: lint
+    poetry publish --build
