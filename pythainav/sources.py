@@ -1,11 +1,10 @@
-from abc import ABC
-from abc import abstractmethod
-from functools import lru_cache
 from typing import List
+
+from abc import ABC, abstractmethod
+from functools import lru_cache
 
 import dateparser
 import requests
-
 from furl import furl
 
 from .nav import Nav
@@ -52,7 +51,12 @@ class Finnomena(Source):
         url = url.url
 
         nav = requests.get(url).json()
-        nav = Nav(value=float(nav["value"]), updated=dateparser.parse(nav["nav_date"]), tags={"latest"}, fund=fund)
+        nav = Nav(
+            value=float(nav["value"]),
+            updated=dateparser.parse(nav["nav_date"]),
+            tags={"latest"},
+            fund=fund,
+        )
         return nav
 
     # cache here should be sensible since the fund is not regulary update
@@ -72,7 +76,12 @@ class Finnomena(Source):
 
         navs = []
         for nav_resp in navs_response:
-            nav = Nav(value=float(nav_resp["value"]), updated=dateparser.parse(nav_resp["nav_date"]), tags={}, fund=fund)
+            nav = Nav(
+                value=float(nav_resp["value"]),
+                updated=dateparser.parse(nav_resp["nav_date"]),
+                tags={},
+                fund=fund,
+            )
             nav.amount = nav_resp["amount"]
             navs.append(nav)
 

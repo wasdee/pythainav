@@ -41,7 +41,9 @@ def get(fund_name, *, source="finnomena", date=None, **kargs) -> Nav:
     return nav
 
 
-def get_all(fund_name, *, source="finnomena", asDataFrame=False, **kargs) -> List[Nav]:
+def get_all(
+    fund_name, *, source="finnomena", asDataFrame=False, **kargs
+) -> List[Nav]:
     """
     Gets the latest NAV
 
@@ -65,6 +67,20 @@ def get_all(fund_name, *, source="finnomena", asDataFrame=False, **kargs) -> Lis
     [Nav(value=4.2696, updated='20/01/2020', tags={'latest'}, fund='KT-PRECIOUS'), ...]
 
     >>> nav.get_all("KT-PRECIOUS", asDataFrame=True)
+            value    updated tags         fund
+    0     10.0001 2010-11-19   {}  KT-PRECIOUS
+    1     10.0566 2010-11-22   {}  KT-PRECIOUS
+    2     10.0326 2010-11-23   {}  KT-PRECIOUS
+    3     10.0428 2010-11-24   {}  KT-PRECIOUS
+    4     10.0253 2010-11-25   {}  KT-PRECIOUS
+    ...       ...        ...  ...          ...
+    2260   5.5777 2020-10-07   {}  KT-PRECIOUS
+    2261   5.6468 2020-10-08   {}  KT-PRECIOUS
+    2262   5.8868 2020-10-09   {}  KT-PRECIOUS
+    2263   5.9086 2020-10-14   {}  KT-PRECIOUS
+    2264   5.8438 2020-10-15   {}  KT-PRECIOUS
+
+    [2265 rows x 4 columns]
     ```
     """
     fund_name = fund_name.upper()

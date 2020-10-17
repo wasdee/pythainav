@@ -1,10 +1,11 @@
+from typing import Set
+
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Set
 
 
 @dataclass
-class Nav(object):
+class Nav:
     """Class for store the NAV value with references"""
 
     value: float

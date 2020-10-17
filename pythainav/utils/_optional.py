@@ -1,10 +1,10 @@
 # https://github.com/pandas-dev/pandas/blob/774498b667e82bf6e826da44135a3ef99590ead6/pandas/compat/_optional.py
 
+import types
+
 import distutils.version
 import importlib
-import types
 import warnings
-
 
 VERSIONS = {"pandas": "0.25.3"}
 
@@ -20,7 +20,12 @@ def _get_version(module: types.ModuleType) -> str:
     return version
 
 
-def import_optional_dependency(name: str, extra: str = "", raise_on_missing: bool = True, on_version: str = "raise"):
+def import_optional_dependency(
+    name: str,
+    extra: str = "",
+    raise_on_missing: bool = True,
+    on_version: str = "raise",
+):
     """
     Import an optional dependency.
     By default, if a dependency is missing an ImportError with a nice
@@ -51,7 +56,10 @@ def import_optional_dependency(name: str, extra: str = "", raise_on_missing: boo
         is False, or when the package's version is too old and `on_version`
         is ``'warn'``.
     """
-    msg = f"Missing optional dependency '{name}'. {extra} " f"Use pip or conda to install {name}."
+    msg = (
+        f"Missing optional dependency '{name}'. {extra} "
+        f"Use pip or conda to install {name}."
+    )
     try:
         module = importlib.import_module(name)
     except ImportError:
