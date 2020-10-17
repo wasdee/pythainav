@@ -164,4 +164,4 @@ clean: clean_build clean_docker
 
 .PHONY: publish
 publish: lint
-    poetry publish --build
+	poetry publish --build
