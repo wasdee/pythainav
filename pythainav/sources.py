@@ -146,7 +146,7 @@ class Sec(Source):
         response.raise_for_status()
         if response.status_code == 200:
             if response.headers["content-length"] == "0":
-                raise requests.exceptions.ConnectionError("No data received")
+                return None
             return response.json()
         # No content
         elif response.status_code == 204:
