@@ -1,11 +1,9 @@
 import json
 import re
 
-import pytest
-
-from furl import furl
-
 import httpretty
+import pytest
+from furl import furl
 
 # from tests.factories.dailynav import AMCInfoFactory
 # from tests.factories.dailynav import DailyNavFactory
@@ -15,7 +13,10 @@ import httpretty
 
 @pytest.fixture
 def subscription_key():
-    subscription_key = {"fundfactsheet": "fact_key", "funddailyinfo": "daily_key"}
+    subscription_key = {
+        "fundfactsheet": "fact_key",
+        "funddailyinfo": "daily_key",
+    }
     return subscription_key
 
 
