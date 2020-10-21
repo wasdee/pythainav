@@ -1,4 +1,4 @@
-name: Build Docs
+name: docs
 
 on:
   push:
@@ -48,6 +48,6 @@ jobs:
       if: steps.cache.outputs.cache-hit != 'true'
       uses: peaceiris/actions-gh-pages@v3.7.3
       env:
-        ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-        PUBLISH_BRANCH: gh-pages
-        PUBLISH_DIR: ./site
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: ./site
