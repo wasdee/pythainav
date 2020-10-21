@@ -34,6 +34,8 @@ bandit = "^1.6.2"
 safety = "^1.9.0"
 pylint = "^2.6.0"
 pydocstyle = "^5.1.1"
+python-decouple = "^3.3"
+httpretty = "^1.0.2"
 
 [tool.black]
 # https://github.com/psf/black

@@ -7,10 +7,10 @@ from furl import furl
 
 import httpretty
 
-from tests.factories.dailynav import AMCInfoFactory
-from tests.factories.dailynav import DailyNavFactory
-from tests.factories.search_class_fund import SearchClassFundFactory
-from tests.factories.search_fund import SearchFundFactory
+# from tests.factories.dailynav import AMCInfoFactory
+# from tests.factories.dailynav import DailyNavFactory
+# from tests.factories.search_class_fund import SearchClassFundFactory
+# from tests.factories.search_fund import SearchFundFactory
 
 
 @pytest.fixture
@@ -19,18 +19,18 @@ def subscription_key():
     return subscription_key
 
 
-@pytest.fixture
-def dataset():
-    dataset = {}
-    dataset["search_fund_data"] = SearchFundFactory.build_batch(5)
-    dataset["search_class_fund_data"] = SearchClassFundFactory.build_batch(5)
-    dataset["dailynav_data"] = DailyNavFactory.create()
-
-    multi_class_dailynav_data = DailyNavFactory.create(class_fund=True)
-    multi_class_amc_info = AMCInfoFactory(class_fund=True)
-    multi_class_dailynav_data["amc_info"] = [multi_class_amc_info]
-    dataset["multi_class_dailynav_data"] = multi_class_dailynav_data
-    return dataset
+# @pytest.fixture
+# def dataset():
+#     dataset = {}
+#     dataset["search_fund_data"] = SearchFundFactory.build_batch(5)
+#     dataset["search_class_fund_data"] = SearchClassFundFactory.build_batch(5)
+#     dataset["dailynav_data"] = DailyNavFactory.create()
+#
+#     multi_class_dailynav_data = DailyNavFactory.create(class_fund=True)
+#     multi_class_amc_info = AMCInfoFactory(class_fund=True)
+#     multi_class_dailynav_data["amc_info"] = [multi_class_amc_info]
+#     dataset["multi_class_dailynav_data"] = multi_class_dailynav_data
+#     return dataset
 
 
 @pytest.fixture(autouse=True)

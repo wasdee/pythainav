@@ -33,7 +33,7 @@ def get(fund_name, *, source="finnomena", date=None, **kargs) -> Nav:
     source2class = {
         "finnomena": sources.Finnomena,
         "sec": sources.Sec,
-        "onde": sources.Onde,
+        # "onde": sources.Onde,
     }
     _source = source2class[source](**kargs)
 
