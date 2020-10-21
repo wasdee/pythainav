@@ -20,7 +20,7 @@ fuzzywuzzy = {extras = ["speedup"], version = ">=0.17,<0.19"}
 [tool.poetry.dev-dependencies]
 pytest = "^6.1"
 mkdocs = "^1.0"
-mkdocs-material = "^4.6"
+mkdocs-material = "^6.1"
 pygments = "^2.5"
 pymdown-extensions = "^8.0"
 mkautodoc = "^0.1.0"
