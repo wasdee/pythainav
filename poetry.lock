@@ -652,7 +652,7 @@ py = ">=1.8.2"
 toml = "*"
 
 [package.extras]
-checkqa_mypy = ["mypy (0.780)"]
+checkqa_mypy = ["mypy (==0.780)"]
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "requests", "xmlschema"]
 
 [[package]]
@@ -692,7 +692,7 @@ python-versions = "*"
 
 [[package]]
 name = "pyupgrade"
-version = "2.7.2"
+version = "2.7.3"
 description = "A tool to automatically upgrade syntax for newer versions."
 category = "dev"
 optional = false
@@ -733,7 +733,7 @@ urllib3 = ">=1.21.1,<1.25.0 || >1.25.0,<1.25.1 || >1.25.1,<1.26"
 
 [package.extras]
 security = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)"]
-socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7)", "win-inet-pton"]
+socks = ["PySocks (>=1.5.6,!=1.5.7)", "win-inet-pton"]
 
 [[package]]
 name = "safety"
@@ -858,7 +858,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4"
 [package.extras]
 brotli = ["brotlipy (>=0.6.0)"]
 secure = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "certifi", "ipaddress"]
-socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7,<2.0)"]
+socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 
 [[package]]
 name = "virtualenv"
@@ -897,12 +897,12 @@ python-versions = ">=3.6"
 
 [package.extras]
 docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
-testing = ["pytest (>=3.5,<3.7.3 || >3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pytest-cov", "jaraco.test (>=3.2.0)", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
+testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pytest-cov", "jaraco.test (>=3.2.0)", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "08529687527e31f09960d1863ba25ce5f5309c5e8269d2c0e6ca39c857bd40b4"
+content-hash = "8b99369c0358cc938a8281fbf1122e67320ecc575987d2ebfd6948ec0b9a7272"
 
 [metadata.files]
 appdirs = [
@@ -1245,8 +1245,8 @@ pytz = [
     {file = "pytz-2020.1.tar.gz", hash = "sha256:c35965d010ce31b23eeb663ed3cc8c906275d6be1a34393a1d73a41febf4a048"},
 ]
 pyupgrade = [
-    {file = "pyupgrade-2.7.2-py2.py3-none-any.whl", hash = "sha256:24cbd268be09c3df8ab431dfb31d7c84dee7adccfa27b8af4443386484ad736d"},
-    {file = "pyupgrade-2.7.2.tar.gz", hash = "sha256:44df36f581fa4c61f599993595c23a46d79e4f67e3768aeaf789e42422b94900"},
+    {file = "pyupgrade-2.7.3-py2.py3-none-any.whl", hash = "sha256:071fec15248b7885381657d6701cc38ecf20d6c9ade5a58499c9456e0657de98"},
+    {file = "pyupgrade-2.7.3.tar.gz", hash = "sha256:69440d4805455159d3c5a44e03a64cd3699a2b1fbd78965d1122a4c37af44f93"},
 ]
 pyyaml = [
     {file = "PyYAML-5.3.1-cp27-cp27m-win32.whl", hash = "sha256:74809a57b329d6cc0fdccee6318f44b9b8649961fa73144a98735b0aaf029f1f"},
