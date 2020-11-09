@@ -399,7 +399,7 @@ tornado = ">=5.0"
 
 [[package]]
 name = "mkdocs-material"
-version = "6.1.0"
+version = "6.1.4"
 description = "A Material Design theme for MkDocs"
 category = "dev"
 optional = false
@@ -1095,8 +1095,8 @@ mkdocs = [
     {file = "mkdocs-1.1.2.tar.gz", hash = "sha256:f0b61e5402b99d7789efa032c7a74c90a20220a9c81749da06dbfbcbd52ffb39"},
 ]
 mkdocs-material = [
-    {file = "mkdocs-material-6.1.0.tar.gz", hash = "sha256:a4bfd736898e6bfeb2c0d00ab448f464a389fb6a7dd2a30a90343756fd8aec83"},
-    {file = "mkdocs_material-6.1.0-py2.py3-none-any.whl", hash = "sha256:81095982fc4d634ee4b16abb91fa7b2e1f50ab7e39df67aafa8f5d4fd7b28e24"},
+    {file = "mkdocs-material-6.1.4.tar.gz", hash = "sha256:e15b016bea35300956b66d553043331cbe1793ca53946180424b8bca21bbb781"},
+    {file = "mkdocs_material-6.1.4-py2.py3-none-any.whl", hash = "sha256:c0591b806e85302314bf308d61745e2cbb6b3caa3cec3d5fcb8d70a81076e7cb"},
 ]
 mkdocs-material-extensions = [
     {file = "mkdocs-material-extensions-1.0.1.tar.gz", hash = "sha256:6947fb7f5e4291e3c61405bad3539d81e0b3cd62ae0d66ced018128af509c68f"},
