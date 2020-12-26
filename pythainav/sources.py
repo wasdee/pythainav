@@ -63,7 +63,7 @@ class Finnomena(Source):
     # cache here should be sensible since the fund is not regulary update
     # TODO: change or ttl cache with timeout = [1 hour, 1 day]
     @lru_cache(maxsize=1024)
-    def get_range(self, fund: str, period="SI"):
+    def get_range(self, fund: str, period):
         name2fund = self.list()
 
         url = self.base / "nav" / "q"

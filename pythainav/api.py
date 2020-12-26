@@ -43,7 +43,7 @@ def get(fund_name, *, source="finnomena", date=None, **kargs) -> Nav:
 
 
 def get_all(
-    fund_name, *, source="finnomena", asDataFrame=False, **kargs
+    fund_name, *, source="finnomena", asDataFrame=False, period="SI", **kargs
 ) -> List[Nav]:
     """
     Gets the latest NAV
@@ -92,7 +92,7 @@ def get_all(
     }
     _source = source2class[source](**kargs)
 
-    navs = _source.get_range(fund_name)
+    navs = _source.get_range(fund_name, period)
 
     if asDataFrame:
         pd = import_optional_dependency("pandas")
