@@ -34,18 +34,15 @@ jobs:
 
       - name: Install dependencies
         run: |
-          source "$HOME/.poetry/env"
           poetry config virtualenvs.in-project true
           poetry install
 
       - name: Run safety checks
         run: |
-          source "$HOME/.poetry/env"
           STRICT=1 make check-safety
 
       - name: Run style checks
         run: |
-          source "$HOME/.poetry/env"
           STRICT=1 make check-style
 
       - name: Run tests
@@ -54,5 +51,4 @@ jobs:
           FUND_DAILY_INFO_KEY: ${{ secrets.FUND_DAILY_INFO_KEY }}
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         run: |
-          source "$HOME/.poetry/env"
           make test
