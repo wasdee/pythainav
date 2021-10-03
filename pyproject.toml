@@ -20,7 +20,7 @@ importlib-metadata = "^4.8.1"
 [tool.poetry.dev-dependencies]
 pytest = "^6.1"
 pygments = "^2.7"
-pymdown-extensions = "^8.0"
+pymdown-extensions = "^9.0"
 mkautodoc = "^0.1.0"
 pandas = "^1.0.1"
 pre-commit = "^2.8.2"
