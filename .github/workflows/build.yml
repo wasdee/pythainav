@@ -10,6 +10,8 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
         python-version: [ '3.6', '3.7', '3.8', '3.9', '3.10-dev' ]
+    env:
+      POETRY_HOME: /opt/poetry
     steps:
       - uses: actions/checkout@v2.3.4
       - name: Set up Python ${{ matrix.python-version }}
@@ -18,7 +20,11 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install poetry
-        run: make download-poetry
+        run: |
+          curl -fsS -o install-poetry.py \
+            https://raw.githubusercontent.com/python-poetry/poetry/HEAD/install-poetry.py
+          python install-poetry.py -y
+          echo "$POETRY_HOME/bin" >> $GITHUB_PATH
 
       - name: Set up cache
         uses: actions/cache@v2.1.2
