@@ -35,6 +35,15 @@
         "code",
         "test"
       ]
+    },
+    {
+      "login": "samupra",
+      "name": "Pongpira Upra",
+      "avatar_url": "https://avatars.githubusercontent.com/u/24209940?v=4",
+      "profile": "https://github.com/samupra",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
