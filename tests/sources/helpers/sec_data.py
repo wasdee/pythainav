@@ -1,11 +1,9 @@
 import json
 import re
 
-from tests.factories.dailynav import AMCInfoFactory
-from tests.factories.dailynav import DailyNavFactory
+from tests.factories.dailynav import AMCInfoFactory, DailyNavFactory
 from tests.factories.search_class_fund import SearchClassFundFactory
 from tests.factories.search_fund import SearchFundFactory
-
 
 # def setup_sec_data(unit_test, httpretty):
 #     httpretty.reset()

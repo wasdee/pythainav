@@ -28,7 +28,7 @@ def get(fund_name, *, source="finnomena", date=None, **kargs) -> Nav:
     Nav(value=4.2696, updated='20/01/2020', tags={'latest'}, fund='KT-PRECIOUS')
     ```
     """
-    fund_name = fund_name.upper()
+    fund_name = fund_name
 
     source2class = {
         "finnomena": sources.Finnomena,
@@ -84,7 +84,7 @@ def get_all(
     [2265 rows x 4 columns]
     ```
     """
-    fund_name = fund_name.upper()
+    fund_name = fund_name
 
     source2class = {
         "finnomena": sources.Finnomena,

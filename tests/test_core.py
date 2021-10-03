@@ -1,5 +1,4 @@
 import pytest
-
 import pythainav as nav
 
 
@@ -10,9 +9,9 @@ def test_get_nav():
 
 
 def test_get_nav_with_date():
-    kt_nav = nav.get("KT-PRECIOUS", date="1 week ago")
-    print(kt_nav)
-    assert kt_nav.value >= 0
+    oil_nav = nav.get("TMBOIL", date="1 week ago")
+    print(oil_nav)
+    assert oil_nav.value >= 0
 
 
 def test_get_all():
@@ -43,7 +42,10 @@ def test_sec_source():
     # assert kt_nav.value >= 0
 
     kt_nav = nav.get(
-        "KT-PRECIOUS", source="sec", subscription_key=subs_key, date="03/04/2020"
+        "KT-PRECIOUS",
+        source="sec",
+        subscription_key=subs_key,
+        date="03/04/2020",
     )
     print(kt_nav)
     assert kt_nav.value >= 0

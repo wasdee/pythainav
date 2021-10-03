@@ -4,8 +4,14 @@ on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: [ '3.6', '3.7', '3.8', '3.9', '3.10-dev' ]
+    env:
+      POETRY_HOME: /opt/poetry
     steps:
       - uses: actions/checkout@v2.3.4
       - name: Set up Python ${{ matrix.python-version }}
@@ -14,7 +20,11 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install poetry
-        run: make download-poetry
+        run: |
+          curl -fsS -o install-poetry.py \
+            https://raw.githubusercontent.com/python-poetry/poetry/HEAD/install-poetry.py
+          python install-poetry.py -y
+          echo "$POETRY_HOME/bin" >> $GITHUB_PATH
 
       - name: Set up cache
         uses: actions/cache@v2.1.2
@@ -24,18 +34,15 @@ jobs:
 
       - name: Install dependencies
         run: |
-          source "$HOME/.poetry/env"
           poetry config virtualenvs.in-project true
           poetry install
 
       - name: Run safety checks
         run: |
-          source "$HOME/.poetry/env"
           STRICT=1 make check-safety
 
       - name: Run style checks
         run: |
-          source "$HOME/.poetry/env"
           STRICT=1 make check-style
 
       - name: Run tests
@@ -44,5 +51,4 @@ jobs:
           FUND_DAILY_INFO_KEY: ${{ secrets.FUND_DAILY_INFO_KEY }}
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         run: |
-          source "$HOME/.poetry/env"
           make test
