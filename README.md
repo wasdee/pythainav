@@ -1,6 +1,6 @@
 # PythaiNAV: ทำให้การดึงข้อมูลกองทุนไทยเป็นเรื่องง่าย
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FCircleOnCircles%2Fpythainav.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FCircleOnCircles%2Fpythainav?ref=badge_shield)
 ![Tests](https://github.com/CircleOnCircles/pythainav/workflows/Tests/badge.svg?branch=master)
@@ -56,14 +56,17 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="http://nutchanon.org"><img src="https://avatars2.githubusercontent.com/u/8089231?v=4" width="100px;" alt=""/><br /><sub><b>Nutchanon Ninyawee</b></sub></a><br /><a href="https://github.com/CircleOnCircles/pythainav/commits?author=CircleOnCircles" title="Code">💻</a> <a href="#infra-CircleOnCircles" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
-    <td align="center"><a href="https://github.com/sctnightcore"><img src="https://avatars2.githubusercontent.com/u/23263315?v=4" width="100px;" alt=""/><br /><sub><b>sctnightcore</b></sub></a><br /><a href="https://github.com/CircleOnCircles/pythainav/commits?author=sctnightcore" title="Code">💻</a> <a href="#talk-sctnightcore" title="Talks">📢</a> <a href="#ideas-sctnightcore" title="Ideas, Planning, & Feedback">🤔</a></td>
-    <td align="center"><a href="https://github.com/angonyfox"><img src="https://avatars3.githubusercontent.com/u/1295513?v=4" width="100px;" alt=""/><br /><sub><b>angonyfox</b></sub></a><br /><a href="https://github.com/CircleOnCircles/pythainav/commits?author=angonyfox" title="Code">💻</a> <a href="https://github.com/CircleOnCircles/pythainav/commits?author=angonyfox" title="Tests">⚠️</a></td>
+    <td align="center"><a href="http://nutchanon.org"><img src="https://avatars2.githubusercontent.com/u/8089231?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nutchanon Ninyawee</b></sub></a><br /><a href="https://github.com/CircleOnCircles/pythainav/commits?author=CircleOnCircles" title="Code">💻</a> <a href="#infra-CircleOnCircles" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+    <td align="center"><a href="https://github.com/sctnightcore"><img src="https://avatars2.githubusercontent.com/u/23263315?v=4?s=100" width="100px;" alt=""/><br /><sub><b>sctnightcore</b></sub></a><br /><a href="https://github.com/CircleOnCircles/pythainav/commits?author=sctnightcore" title="Code">💻</a> <a href="#talk-sctnightcore" title="Talks">📢</a> <a href="#ideas-sctnightcore" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/angonyfox"><img src="https://avatars3.githubusercontent.com/u/1295513?v=4?s=100" width="100px;" alt=""/><br /><sub><b>angonyfox</b></sub></a><br /><a href="https://github.com/CircleOnCircles/pythainav/commits?author=angonyfox" title="Code">💻</a> <a href="https://github.com/CircleOnCircles/pythainav/commits?author=angonyfox" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://github.com/samupra"><img src="https://avatars.githubusercontent.com/u/24209940?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Pongpira Upra</b></sub></a><br /><a href="https://github.com/CircleOnCircles/pythainav/commits?author=samupra" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/namv2012"><img src="https://avatars.githubusercontent.com/u/50385570?v=4?s=100" width="100px;" alt=""/><br /><sub><b>namv2012</b></sub></a><br /><a href="https://github.com/CircleOnCircles/pythainav/commits?author=namv2012" title="Code">💻</a></td>
   </tr>
 </table>
 
-<!-- markdownlint-enable -->
+<!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
