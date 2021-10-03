@@ -1,4 +1,10 @@
-from typing import List, Literal
+from typing import List
+
+try:
+    from typing import Literal
+except ImportError:
+    from typing_extensions import Literal
+
 
 import datetime
 from abc import ABC, abstractmethod
@@ -24,7 +30,7 @@ class Source(ABC):
 
 class Finnomena(Source):
     base = furl("https://www.finnomena.com/fn3/api/fund/")
-    base_v2 = furl('https://www.finnomena.com/fn3/api/fund/v2/')
+    base_v2 = furl("https://www.finnomena.com/fn3/api/fund/v2/")
 
     def __init__(self):
         super().__init__()
@@ -55,7 +61,7 @@ class Finnomena(Source):
         nav = requests.get(url).json()
         nav = Nav(
             value=float(nav["value"]),
-            updated=datetime.datetime.strptime(nav["nav_date"], '%Y-%m-%d'),
+            updated=datetime.datetime.strptime(nav["nav_date"], "%Y-%m-%d"),
             tags={"latest"},
             fund=fund,
         )
@@ -92,11 +98,24 @@ class Finnomena(Source):
     # cache here should be sensible since the fund is not regulary update
     # TODO: change or ttl cache with timeout = [1 hour, 1 day]
     @lru_cache(maxsize=1024)
-    def get_range_v2(self, fund: str, range: Literal['1D', '1W', '1M', '6M', 'YTD', '1Y', '3Y', '5Y', '10Y', 'MAX']='1Y'):
+    def get_range_v2(
+        self,
+        fund: str,
+        range: Literal[
+            "1D", "1W", "1M", "6M", "YTD", "1Y", "3Y", "5Y", "10Y", "MAX"
+        ] = "1Y",
+    ):
         name2fund = self.list()
 
         # /fn3/api/fund/v2/ public/funds/F00000IT9T/nav/q
-        url = self.base_v2 / "public" /  "funds" / name2fund[fund]["id"] / 'nav' / "q"
+        url = (
+            self.base_v2
+            / "public"
+            / "funds"
+            / name2fund[fund]["id"]
+            / "nav"
+            / "q"
+        )
         url.args["range"] = range
 
         # convert to str
@@ -104,11 +123,11 @@ class Finnomena(Source):
 
         navs_response = requests.get(url).json()
 
-        if not navs_response['status']:
-            raise Exception(f'response to {url} is invalid')
+        if not navs_response["status"]:
+            raise Exception(f"response to {url} is invalid")
 
         navs = []
-        for nav_resp in navs_response['data']['navs']:
+        for nav_resp in navs_response["data"]["navs"]:
             date = dateparser.parse(nav_resp["date"])
             date = date.replace(tzinfo=None)
             nav = Nav(
