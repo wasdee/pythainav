@@ -9,7 +9,7 @@ repository = "https://github.com/CircleOnCircles/pythainav"
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.6.2"
+python = "^3.7"
 furl = "^2.1"
 dateparser = "^1.0.0"
 dataclasses = {version = "^0.7.0", python = "3.6"}
