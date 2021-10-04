@@ -65,6 +65,7 @@ def get_all(
     * **fund_name** - Fund name found in finnomena such as `TISTECH-A`
     * **source** - *(optional)* Data source for pull data. See Data Sources
     section in the documentation for all availiable options.
+    * **range** - *(optional)* time period defalut to 1 year, avaliable options are "1D", "1W", "1M", "6M", "YTD", "1Y", "3Y", "5Y", "10Y", "MAX"
     * **asDataFrame** - *(optional)* return pandas dataframe instead.
     * **subscription_key** - *(optional)* Subscription key that required for
     a data source like `sec` (a.k.a)
