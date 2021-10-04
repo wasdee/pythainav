@@ -3,13 +3,19 @@ name: Test
 on: [push, pull_request]
 
 jobs:
-  build:
+  test:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
+      continue-on-error: ${{ matrix.experimental }}
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: [ '3.6', '3.7', '3.8', '3.9', '3.10-dev' ]
+        python-version: [ '3.6', '3.7', '3.8', '3.9']
+        experimental: [false]
+        include:
+          - os: Ubuntu
+            python-version: "3.10-dev"
+            experimental: true
     steps:
       - uses: actions/checkout@v2.3.4
       - name: Set up Python ${{ matrix.python-version }}
