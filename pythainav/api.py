@@ -1,5 +1,10 @@
 from typing import List
 
+try:
+    from typing import Literal
+except ImportError:
+    from typing_extensions import Literal
+
 from . import sources
 from .nav import Nav
 from .utils._optional import import_optional_dependency
@@ -43,7 +48,14 @@ def get(fund_name, *, source="finnomena", date=None, **kargs) -> Nav:
 
 
 def get_all(
-    fund_name, *, source="finnomena", asDataFrame=False, **kargs
+    fund_name,
+    *,
+    source="finnomena",
+    asDataFrame=False,
+    range: Literal[
+        "1D", "1W", "1M", "6M", "YTD", "1Y", "3Y", "5Y", "10Y", "MAX"
+    ] = "1Y",
+    **kargs,
 ) -> List[Nav]:
     """
     Gets the latest NAV
@@ -92,7 +104,7 @@ def get_all(
     }
     _source = source2class[source](**kargs)
 
-    navs = _source.get_range(fund_name)
+    navs = _source.get_range(fund_name, range=range)
 
     if asDataFrame:
         pd = import_optional_dependency("pandas")

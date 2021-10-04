@@ -47,7 +47,7 @@ class Finnomena(Source):
     def get(self, fund: str, date: str = None):
 
         if date:
-            navs = self.get_range_v2(fund)
+            navs = self.get_range(fund)
             return self._find_earliest(navs, date)
 
         name2fund = self.list()
@@ -70,7 +70,7 @@ class Finnomena(Source):
     # cache here should be sensible since the fund is not regulary update
     # TODO: change or ttl cache with timeout = [1 hour, 1 day]
     @lru_cache(maxsize=1024)
-    def get_range(self, fund: str, period="SI"):
+    def get_range_v1(self, fund: str, period="SI"):
         name2fund = self.list()
 
         url = self.base / "nav" / "q"
@@ -98,7 +98,7 @@ class Finnomena(Source):
     # cache here should be sensible since the fund is not regulary update
     # TODO: change or ttl cache with timeout = [1 hour, 1 day]
     @lru_cache(maxsize=1024)
-    def get_range_v2(
+    def get_range(
         self,
         fund: str,
         range: Literal[
