@@ -47,7 +47,6 @@ jobs:
     - name: Deploy Docs
       if: steps.cache.outputs.cache-hit != 'true'
       uses: peaceiris/actions-gh-pages@v3.8.0
-      env:
-        ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-        PUBLISH_BRANCH: gh-pages
-        PUBLISH_DIR: ./site
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./public
