@@ -45,6 +45,7 @@ class Finnomena(Source):
         return None
 
     def get(self, fund: str, date: str = None):
+        fund = fund.lower()
 
         if date:
             navs = self.get_range(fund)
@@ -149,7 +150,7 @@ class Finnomena(Source):
         url = self.base / "public" / "list"
         url = url.url
         funds = requests.get(url).json()
-        return {fund["short_code"]: fund for fund in funds}
+        return {fund["short_code"].lower(): fund for fund in funds}
 
     # def _list(self, )
 
