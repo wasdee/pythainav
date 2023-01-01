@@ -49,3 +49,10 @@ def test_sec_source():
     )
     print(kt_nav)
     assert kt_nav.value >= 0
+
+def test_case_insensitive():
+    kt_nav = nav.get("kt-precious")
+    print(kt_nav)
+    assert kt_nav.value >= 0
+
+
