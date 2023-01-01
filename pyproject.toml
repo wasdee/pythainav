@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pythainav"
-version = "0.2.1"
+version = "0.3.0"
 description = "a Python interface to pull thai mutual fund NAV"
 authors = ["Nutchanon Ninyawee <me@nutchanon.org>"]
 maintainers = ["Nutchanon Ninyawee <me@nutchanon.org>"]
