@@ -97,7 +97,7 @@ def get_all(
     [2265 rows x 4 columns]
     ```
     """
-    fund_name = fund_name
+    fund_name = fund_name.lower()
 
     source2class = {
         "finnomena": sources.Finnomena,
