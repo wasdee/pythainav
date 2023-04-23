@@ -9,13 +9,13 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.5.0
+      - uses: actions/checkout@v3
 
       - name: Get tag
         id: tag
         run: echo ::set-output name=tag::${GITHUB_REF#refs/tags/}
 
-      - uses: actions/setup-python@v4.6.0
+      - uses: actions/setup-python@v4
         with:
           python-version: 3.9
 
